@@ -1,8 +1,8 @@
 CREATE SCHEMA investigacion;
 use Investigacion;
 -- drop schema investigacion;
-
--- sedes ------------------------------------------------------------------------------------------------------------------------    
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA SEDE
 CREATE TABLE sede(
 	sed_id INT NOT NULL PRIMARY KEY,
     sed_nombre VARCHAR(45) NOT NULL,
@@ -21,7 +21,8 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion,sed_numEstudiantes)
             (8,'sede Caribe','San Andrés',2000),
             (9,'sede Tumaco','Nariño',2750);
             
--- facultades ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA FACULTDAD
 CREATE TABLE facultad(
 	fac_id INT NOT NULL PRIMARY KEY,
     fac_nombre VARCHAR(45) NOT NULL
@@ -41,7 +42,8 @@ CREATE TABLE facultad(
             (11,'Ciencias económicas');
 
 
--- departamentos ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA DEPARTAMENTO
 CREATE TABLE departamento(
 	dep_id INT NOT NULL PRIMARY KEY,
     dep_nombre  VARCHAR(45),
@@ -75,7 +77,8 @@ CREATE TABLE departamento(
             (22,'Administración y contaduría pública',3,11),
             (23,'Economía',3,11);
             
--- programas academicos (carreras)  ------------------------------------------------------------------------------------------------------------------------  
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA PROGRAMAS ACADÉMICOS
 CREATE TABLE programa_academico(
 	prg_id INT NOT NULL PRIMARY KEY,
     prg_nombre VARCHAR(45),
@@ -104,7 +107,8 @@ CREATE TABLE programa_academico(
             (16,'Contaduría pública ',68,'Pregrado',22),
             (17,'Economía',68,'Pregrado',23);
             
--- equipo de laboratorio ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA DE EQUIPOS DE LABORATORIO
 CREATE TABLE equipo(
 	equ_id INT NOT NULL PRIMARY KEY,
     equ_nom VARCHAR(45) NOT NULL,
@@ -129,8 +133,8 @@ CREATE TABLE equipo(
             	(15,'Resistencias',6);
 
 		
-
--- semilleros de investigación ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA DE SEMILLEROS DE INVESTIGACIÓN
 CREATE TABLE semillero(
 	sem_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     sem_nombre VARCHAR(50) NOT NULL,
@@ -147,7 +151,8 @@ CREATE TABLE semillero(
 		(5,'semillero4',33,'informatica',2),
 		(6,'semillero5',7,'informatica',7);
 
--- grupos de investigación ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA GRUPOS DE INVESTIGACIÓN
 CREATE TABLE grupo_investigacion(
 	gru_id INT NOT NULL PRIMARY KEY,
 	gru_nombre VARCHAR(45) NOT NULL,
@@ -166,7 +171,8 @@ CREATE TABLE grupo_investigacion(
 		(5,'Materials',18,13,'Ciencia de materiles avanzados',3,7),
 		(6,'Sistemas simbioticos',7,6,'Biologia/Ecología',3,6);
 
--- proyectos del grupo ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA PROYECTOS
 CREATE TABLE proyecto(
 	pry_id INT NOT NULL PRIMARY KEY,
     pry_nombre VARCHAR(45) NOT NULL,
@@ -188,7 +194,8 @@ CREATE TABLE proyecto(
 		(8,'Hierro','Ciencia de materiles avanzados','Negado','2021-01-03',5),
 		(9,'La ley y el orden UVE','Criminalistica/Medicina Forense','Aceptado','2021-01-03',4);
 
--- papers hechos ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA PAPERS 
 CREATE TABLE paper(
 	pap_id INT NOT NULL PRIMARY KEY,
     pap_titulo VARCHAR(45) NOT NULL,
@@ -221,7 +228,8 @@ CREATE TABLE paper(
 		(20,'p20',77,'tema5',2);
 	
     
--- editorial ------------------------------------------------------------------------------------------------------------------------    
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA EDITORIALES
 CREATE TABLE editorial(
 	edi_id INT NOT NULL PRIMARY KEY,
     edi_nombre VARCHAR(45) NOT NULL,
@@ -236,7 +244,8 @@ CREATE TABLE editorial(
 		(3,'M&M','Cra 60 #52',20,'3158821011');
 
     
--- publicaciones hechas por la editorial -----------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA PUBLICACIONES
 CREATE TABLE publicacion(
 	pub_edi_id INT NOT NULL,
     pub_pap_id INT NOT NULL,
@@ -262,7 +271,8 @@ CREATE TABLE publicacion(
 		(2,15,'2020-10-01'),
 		(3,16,'2020-10-01');
     
--- bibliotecas ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA BIBLIOTECAS
 CREATE TABLE biblioteca(
 	bib_id INT NOT NULL PRIMARY KEY,
     bib_nombre VARCHAR(45) NOT NULL
@@ -276,7 +286,8 @@ CREATE TABLE biblioteca(
 		(5,'Creed'),
 		(6,'C&T');
     
--- estudiantes ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA ESTUDIANTES
 CREATE TABLE estudiante(
 	est_cedula INT NOT NULL PRIMARY KEY,
     est_nombre VARCHAR(45) NOT NULL,
@@ -308,7 +319,8 @@ CREATE TABLE estudiante(
 		(10,'Tony','T',18,'tonyt@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Posgrado',6,12,6);
     
 
--- profesores ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA PROFESORES
 CREATE TABLE profesor(
 	pro_cedula INT NOT NULL PRIMARY KEY,
     pro_nombre VARCHAR(45) NOT NULL,
@@ -341,7 +353,8 @@ CREATE TABLE profesor(
 ALTER TABLE grupo_investigacion ADD CONSTRAINT FK_gru_lider FOREIGN KEY (gru_lider) REFERENCES profesor(pro_cedula);
 ALTER TABLE semillero ADD CONSTRAINT FK_sem_lider FOREIGN KEY (sem_lider) REFERENCES profesor(pro_cedula);
 
--- empleados de la universidad ------------------------------------------------------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA EMPLEADOS
 CREATE TABLE empleado(
 	emp_cedula INT NOT NULL PRIMARY KEY,
     emp_nombre VARCHAR(45) NOT NULL,
@@ -367,7 +380,8 @@ CREATE TABLE empleado(
 		(9,'Mayerly','M',39,'mayerlym@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
 		(10,'David','D',39,'davidd@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25);
     
--- edificios ------------------------------------------------------------------------------------------------------------------------    
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA EDIFICIOS 
 CREATE TABLE edificio(
 	edf_id INT NOT NULL PRIMARY KEY,
     edf_nombre VARCHAR(45) NOT NULL,
@@ -395,7 +409,8 @@ CREATE TABLE edificio(
 		(17,'Edificio17',30,9),
 		(18,'Edificio18',20,9);
             
--- laboratorios ------------------------------------------------------------------------------------------------------------------------   
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA LABORATORIOS  
 CREATE TABLE laboratorio(
 	lab_id INT NOT NULL PRIMARY KEY,
     lab_capacidad INT NOT NULL,
@@ -422,7 +437,8 @@ CREATE TABLE laboratorio(
 		(13,23,'L13','Física',13,3);
             
 
--- relación muchos a muchos entre los laboratorios y los equipos -----------------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA ENTRE LABORATORIOS Y EQUIPOS
 CREATE TABLE equipos_laboratorio(
 	eql_lab_id INT NOT NULL,
     eql_equ_id INT NOT NULL,
@@ -466,7 +482,8 @@ CREATE TABLE equipos_laboratorio(
 		(13,5);
     
     
--- relación muchos a muchos entre los laboratorios y los proyectos --------------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA ENTRE LABORATORIO Y PROYECTO
 CREATE TABLE laboratorio_proyecto(
 	lap_lab_id INT NOT NULL,
     lap_pry_id INT NOT NULL,
@@ -488,7 +505,8 @@ CREATE TABLE laboratorio_proyecto(
 		(12,2),
 		(13,3);
 
--- relación muchos a muchos entre facultad y sede para que no se repita en la tabla facultad -----------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA ENTRE FACULTAD Y SEDE
 CREATE TABLE facultad_sede(
 	fas_sed_id INT NOT NULL,
 	fas_fac_id INT NOT NULL,
@@ -543,7 +561,8 @@ CREATE TABLE facultad_sede(
             (5,10),
             (5,11);
             
--- relación de muchos a muchos entre la biblioteca y la publicación ---------------------------------------------------------------
+-- *************************************************************************************************************************************************************
+-- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA ENTRE BIBLIOTECA Y PUBLICACIÓN
 CREATE TABLE existencia(
 	exi_bib_id INT NOT NULL,
     exi_pub_edi_id INT NOT NULL,
@@ -572,7 +591,8 @@ CREATE TABLE existencia(
 		(2,2,15),
 		(3,3,16);
 
-            
+-- *************************************************************************************************************************************************************
+-- FIN DEL SCRIPT        
 
 
 

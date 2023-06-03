@@ -1,10 +1,11 @@
--- DROP ROLE role_estudiante;
--- DROP ROLE profesor;
--- DROP ROLE empleado;
--- DROP ROLE grupo;
-
 use investigacion;
--- ROL ESTUDIANTE
+-- DROP ROLE role_estudiante;
+-- DROP ROLE role_profesor;
+-- DROP ROLE role_empleado;
+-- DROP ROLE role_grupo;
+
+-- *****************************************************************************************************
+-- PERMISOS, RIVILEGIOS Y VISTAS ASIGNADOS AL ROL ESTUDIANTE
 CREATE ROLE role_estudiante;
 GRANT SELECT, UPDATE ON perfil TO role_estudiante;
 GRANT SELECT ON ver_publicaciones TO role_estudiante;
@@ -31,18 +32,8 @@ GRANT SELECT ON vw_laboratorio_proyecto TO role_estudiante;
 GRANT SELECT ON vw_equipo_laboratorio TO role_estudiante;
 GRANT SELECT ON vw_programa_academico TO role_estudiante;
 
-show grants for role_estudiante;
-create user test0@localhost identified by '1';
-show grants for test0@localhost;
-GRANT role_estudiante to test0@localhost;
-flush privileges;
-alter user 'test0'@'localhost'  default role role_estudiante;
-
-show grants for test0@localhost;
-
-
-
--- ROL PROFESOR
+-- *****************************************************************************************************
+-- PERMISOS, RIVILEGIOS Y VISTAS ASIGNADOS AL ROL PROFESOR
 CREATE ROLE role_profesor;
 
 GRANT SELECT ON perfil_profesor TO role_profesor;
@@ -69,7 +60,8 @@ GRANT SELECT ON vw_equipo_laboratorio TO role_profesor;
 GRANT SELECT ON vw_programa_academico TO role_profesor;
 
 
--- ROL GRUPO DE INVESTIGACIÓN
+-- *****************************************************************************************************
+-- PERMISOS, RIVILEGIOS Y VISTAS ASIGNADOS AL ROL GRUPO
 CREATE ROLE rol_grupo;
 
 GRANT SELECT ON vw_grupo_estudiante TO rol_grupo;
@@ -95,7 +87,8 @@ GRANT SELECT ON vw_equipo_laboratorio TO rol_grupo;
 GRANT SELECT ON vw_programa_academico TO rol_grupo;
 
 
--- ROL EMPLEADO
+-- *****************************************************************************************************
+-- PERMISOS, RIVILEGIOS Y VISTAS ASIGNADOS AL ROL EMPLEADO
 CREATE ROLE rol_empleado;
 
 GRANT SELECT ON vw_grupo_estudiante TO rol_empleado;
@@ -120,5 +113,4 @@ GRANT SELECT ON vw_laboratorio_proyecto TO rol_empleado;
 GRANT SELECT ON vw_equipo_laboratorio TO rol_empleado;
 GRANT SELECT ON vw_programa_academico TO rol_empleado;
 
-flush privileges;
 
