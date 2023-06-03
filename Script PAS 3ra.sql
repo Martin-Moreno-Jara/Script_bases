@@ -93,3 +93,114 @@ BEGIN
 	FROM laboratorio JOIN empleado ON (emp_cedula =lab_ayudante) JOIN edificio ON (lab_edf_id=edf_id);
 END ??
 DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LOS DATOS DEL PERFIL DEL ESTUDIANTE
+DELIMITER ??
+CREATE PROCEDURE mostrar_perfiles ()
+BEGIN
+	SELECT * FROM perfil;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LOS DATOS DEL PERFIL DEL ESTUDIANTE EN ESPECÍFICO
+DELIMITER ??
+CREATE PROCEDURE mostrar_un_perfil(IN ced INT)
+BEGIN
+	SELECT * FROM perfil WHERE est_cedula = ced;
+END??
+DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LLENAR LA TABLA DE PUBLICACIONES
+DELIMITER ??
+CREATE PROCEDURE ver_all_publicaciones()
+BEGIN
+	SELECT * FROM ver_publicaciones;
+END??
+DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN FILTRADA DE LA TABLA DE PUBLICACIONES
+DELIMITER ??
+CREATE PROCEDURE buscar_publicacion
+(IN bp_title VARCHAR(80), IN bp_tema VARCHAR(80), IN bp_grupo VARCHAR(80), IN bp_proyecto VARCHAR(80))
+BEGIN
+			SELECT * FROM ver_publicaciones 
+            WHERE pap_titulo= bp_title 
+            OR pap_tema=bp_tema OR gru_nombre= bp_grupo OR pry_nombre= bp_proyecto; 
+END??
+DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LA TABLA DE PROYECTOS
+  DELIMITER ??
+ CREATE PROCEDURE ver_all_proyectos()
+ BEGIN
+	SELECT * FROM ver_proyectos;
+ END??
+ DELIMITER ; 
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA UN PROYECTO EN ESPECIFICO
+DELIMITER ??
+ CREATE PROCEDURE consultar_proyecto(IN v_p_nombre VARCHAR (60),IN v_gru_nombre VARCHAR (60),IN v_p_estado VARCHAR (60))
+ BEGIN
+	SELECT * FROM ver_proyectos 
+    WHERE pry_nombre= v_p_nombre 
+    OR gru_nombre = v_gru_nombre OR pry_estado=v_p_estado;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LOS PROFESORES
+ DELIMITER ??
+CREATE PROCEDURE mostrar_perfiles_profesores ()
+BEGIN
+	SELECT * FROM perfil_profesor;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA UN PROFESOR EN ESPECÍFICO
+DELIMITER ??
+CREATE PROCEDURE mostrar_un_perfil_profesor(IN ced INT)
+BEGIN
+	SELECT * FROM perfil_profesor WHERE pro_cedula = ced;
+END??
+DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LISTAR LOS INTEGRANTES DE LOS GRUPO
+DELIMITER ??
+ CREATE PROCEDURE list_all_groups()
+ BEGIN
+	SELECT * FROM lista_integrantes_gi;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LISTAR LOS INTEGRANTES DE UN GRUPO EN ESPECÍFICO
+  DELIMITER ??
+ CREATE PROCEDURE list_one_group(IN n_grupo VARCHAR (30))
+ BEGIN
+	SELECT * FROM lista_integrantes_gi	WHERE gru_nombre=n_grupo;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LISTAR LOS PAPERS
+ DELIMITER ??
+ CREATE PROCEDURE all_papers_proy()
+ BEGIN
+	SELECT * FROM vw_papers_de_proyecto;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LISTAR LOS PAPERS DE UN GRUPO EN ESPECÍFICO
+  DELIMITER ??
+ CREATE PROCEDURE one_paper_proy(IN n_proy VARCHAR (30))
+ BEGIN
+	SELECT * FROM vw_papers_de_proyecto	WHERE  pry_nombre=n_proy;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LISTAR LOS PROYECTOS DE LOS GRUPO 
+DELIMITER ??
+ CREATE PROCEDURE all_proy_group()
+ BEGIN
+	SELECT * FROM vw_proyectos_de_grupos;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- FIN DEL SCRIPT
