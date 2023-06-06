@@ -7,19 +7,19 @@ CREATE TABLE sede(
 	sed_id INT NOT NULL PRIMARY KEY,
     sed_nombre VARCHAR(45) NOT NULL,
     sed_ubicacion VARCHAR(45) NOT NULL,
-    sed_numEstudiantes INT
+    sed_numEstudiantes INT DEFAULT 0
 	);
 	
-INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion,sed_numEstudiantes)
-	VALUES	(1,'sede Bogotá','Bogotá',40000),
-			(2,'sede Medellín','Medellín',12437),
-            (3,'sede Manizales','Manizales',10000),
-            (4,'sede Palmira','Valle del Cauca',5000),
-            (5,'sede de La Paz','Valledupar',5240),
-            (6,'sede Amazonia','Leticia',2500),
-            (7,'sede Orinoquia','Orinoquia',2000),
-            (8,'sede Caribe','San Andrés',2000),
-            (9,'sede Tumaco','Nariño',2750);
+INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
+	VALUES	(1,'sede Bogotá','Bogotá'),
+			(2,'sede Medellín','Medellín'),
+            (3,'sede Manizales','Manizales'),
+            (4,'sede Palmira','Valle del Cauca'),
+            (5,'sede de La Paz','Valledupar'),
+            (6,'sede Amazonia','Leticia'),
+            (7,'sede Orinoquia','Orinoquia'),
+            (8,'sede Caribe','San Andrés'),
+            (9,'sede Tumaco','Nariño');
             
 -- *************************************************************************************************************************************************************
 -- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA FACULTDAD
@@ -47,35 +47,35 @@ CREATE TABLE facultad(
 CREATE TABLE departamento(
 	dep_id INT NOT NULL PRIMARY KEY,
     dep_nombre  VARCHAR(45),
-    dep_numGrupos INT NOT NULL,
+    dep_numGrupos INT DEFAULT 0,
     dep_fac_id INT NOT NULL,
     FOREIGN KEY(dep_fac_id) REFERENCES facultad(fac_id)
 	);
     
-    INSERT INTO departamento(dep_id,dep_nombre,dep_numGrupos,dep_fac_id)
-    VALUES 	(1,'Civil y agrícola',3,1),
-			(2,'Sistema e industrial',10,1),
-			(3,'Eléctrica y Electrónica',5,1),
-            (4,'Mecánica y mecatrónica',3,1),
-            (5,'Quimica y ambiental',3,1),
-            (6,'Civil y agrícola',3,1),
-            (7,'Derecho',3,2),
-			(8,'Ciencia política',3,2),
-            (9,'Antropología',5,3),
-            (10,'Psicología',3,3),
-            (11,'Filosofía',3,3),
-            (12,'Salud pública',10,4),
-            (13,'Escuela de educación médica',15,4),
-            (14,'Arquitectura',3,6),
-            (15,'Música',3,6),
-            (16,'Artes plásticas',3,6),
-            (17,'Salud animal',3,7),
-            (18,'Producción animal',3,7),
-            (19,'Salud oral',3,8),
-            (20,'Enfermería',3,9),
-            (21,'Agronomía',3,10),
-            (22,'Administración y contaduría pública',3,11),
-            (23,'Economía',3,11);
+    INSERT INTO departamento(dep_id,dep_nombre,dep_fac_id)
+    VALUES 	(1,'Civil y agrícola',1),
+			(2,'Sistema e industrial',1),
+			(3,'Eléctrica y Electrónica',1),
+            (4,'Mecánica y mecatrónica',1),
+            (5,'Quimica y ambiental',1),
+            (6,'Civil y agrícola',1),
+            (7,'Derecho',2),
+			(8,'Ciencia política',2),
+            (9,'Antropología',3),
+            (10,'Psicología',3),
+            (11,'Filosofía',3),
+            (12,'Salud pública',4),
+            (13,'Escuela de educación médica',4),
+            (14,'Arquitectura',6),
+            (15,'Música',6),
+            (16,'Artes plásticas',6),
+            (17,'Salud animal',7),
+            (18,'Producción animal',7),
+            (19,'Salud oral',8),
+            (20,'Enfermería',9),
+            (21,'Agronomía',10),
+            (22,'Administración y contaduría pública',11),
+            (23,'Economía',11);
             
 -- *************************************************************************************************************************************************************
 -- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA PROGRAMAS ACADÉMICOS
@@ -143,13 +143,13 @@ CREATE TABLE semillero(
     sem_lider INT NOT NULL
 	);
     
-    INSERT INTO semillero(sem_id,sem_nombre,sem_numIntegrantes,sem_area,sem_lider)
-    VALUES	(1,'TULLPA',20,'Agricultura',1),
-    (2,'semillero1',10,'informatica',4),
-		(3,'semillero2',9,'informatica',5),
-		(4,'semillero3',12,'informatica',8),
-		(5,'semillero4',33,'informatica',2),
-		(6,'semillero5',7,'informatica',7);
+    INSERT INTO semillero(sem_id,sem_nombre,sem_area,sem_lider)
+    VALUES	(1,'TULLPA','Agricultura',1),
+    (2,'semillero1','informatica',4),
+		(3,'semillero2','informatica',5),
+		(4,'semillero3','informatica',8),
+		(5,'semillero4','informatica',2),
+		(6,'semillero5','informatica',7);
 
 -- *************************************************************************************************************************************************************
 -- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA GRUPOS DE INVESTIGACIÓN
@@ -163,13 +163,13 @@ CREATE TABLE grupo_investigacion(
     gru_lider INT NOT NULL
 	);
     
-    INSERT INTO grupo_investigacion(gru_id,gru_nombre,gru_numIntegrantes,gru_numPapers,gru_area,gru_numProyectos,gru_lider)
-    VALUES (1,'MIDAS',25,13,'Mineria de datos',13,1),
-    (2,'5G',25,13,'Computacion Cientifica',33,9),
-		(3,'Uqbar',35,5,'Seguridad Informatica',10,5),
-		(4,'CSI',11,20,'Criminalistica/Medicina Forense',9,3),
-		(5,'Materials',18,13,'Ciencia de materiles avanzados',3,7),
-		(6,'Sistemas simbioticos',7,6,'Biologia/Ecología',3,6);
+    INSERT INTO grupo_investigacion(gru_id,gru_nombre,gru_area,gru_lider)
+    VALUES (1,'MIDAS','Mineria de datos',1),
+    (2,'5G','Computacion Cientifica',9),
+		(3,'Uqbar','Seguridad Informatica',5),
+		(4,'CSI','Criminalistica/Medicina Forense',3),
+		(5,'Materials','Ciencia de materiles avanzados',7),
+		(6,'Sistemas simbioticos','Biologia/Ecología',6);
 
 -- *************************************************************************************************************************************************************
 -- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA PROYECTOS
@@ -207,11 +207,11 @@ CREATE TABLE paper(
     
     INSERT INTO paper(pap_id,pap_titulo,pap_numPaginas,pap_tema,pap_pry_id)
     VALUES (1,'Hechos de la mineria de datos sobre bitcoin',28,'Mineria de datos',1),
-    (2,'p2',208,'tema2',2),
-		(3,'p3',38,'tema3',3),
-		(4,'p4',28,'tema4',4),
-		(5,'p5',8,'tema3',5),
-		(6,'p6',63,'tema5',6),
+    (2,'Estudio en células madres',208,'Biología molecular',2),
+		(3,'El arte de la zoologóa',38,'Zoología',3),
+		(4,'Sociedad y nosotros',28,'Sociología',4),
+		(5,'Ensayo sobre la depresión',8,'Psicología',5),
+		(6,'p6',63,'Matemáticas',6),
 		(7,'p7',13,'tema4',7),
 		(8,'p8',52,'tema2',8),
 		(9,'p9',666,'tema3',9),
@@ -238,10 +238,10 @@ CREATE TABLE editorial(
     edi_telefono VARCHAR(45)
 	);
     
-    INSERT INTO editorial(edi_id,edi_nombre,edi_direccion,edi_numPapers,edi_telefono)
-    VALUES(1,'Pinguin','Cra 50 #26',10,'3158821011'),
-    (2,'Elmatador','Cra 25 #13',15,'3158821011'),
-		(3,'M&M','Cra 60 #52',20,'3158821011');
+    INSERT INTO editorial(edi_id,edi_nombre,edi_direccion,edi_telefono)
+    VALUES(1,'Pinguin','Cra 50 #26','3158821011'),
+    (2,'Elmatador','Cra 25 #13','3158821011'),
+		(3,'M&M','Cra 60 #52','3158821011');
 
     
 -- *************************************************************************************************************************************************************
@@ -335,8 +335,10 @@ CREATE TABLE profesor(
     pro_gru_id INT,
     pro_sem_id INT,
     pro_contrasena VARCHAR(50),
+    pro_dep_id INT,
     FOREIGN KEY (pro_gru_id) REFERENCES grupo_investigacion(gru_id),
-	FOREIGN KEY (pro_sem_id)  REFERENCES semillero(sem_id)
+	FOREIGN KEY (pro_sem_id)  REFERENCES semillero(sem_id),
+    FOREIGN KEY (pro_dep_id) REFERENCES departamento(dep_id)
 	);
 	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_fechaVinculacion,pro_tipoProfesor, pro_tituloPregrado,pro_tituloPosgrado, pro_horasSemanales,pro_salario)
     VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Ingeniería industrial','Maestria en ingeniería industrial',30,3000000),
@@ -393,11 +395,11 @@ CREATE TABLE edificio(
     INSERT INTO edificio(edf_id,edf_nombre,edf_numSalones,edf_sed_id) 
     VALUES	(1,'Yu takeuchi',30,1),
 			(2,'Patios de ingenieria',20,1),(3,'Edificio3',30,2),
-		(4,'Edificio4',30,2),
-		(5,'Edificio5',30,3),
-		(6,'Edificio6',30,3),
-		(7,'Edificio7',30,4),
-		(8,'Edificio8',30,4),
+		(4,'Aulas de ingeniería',30,2),
+		(5,'Posgrados de humanas',30,3),
+		(6,'C y T',30,3),
+		(7,'Julio Garavito',30,4),
+		(8,'Hemeroteca',30,4),
 		(9,'Edificio9',30,5),
 		(10,'Edificio10',30,5),
 		(11,'Edificio11',30,6),
