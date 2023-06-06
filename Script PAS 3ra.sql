@@ -203,4 +203,11 @@ DELIMITER ??
  END??
  DELIMITER ;
 -- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LISTAR UN PROYECTO EN ESPECIFICO
+DELIMITER ??
+ CREATE PROCEDURE one_proy_group(IN n_group VARCHAR (30))
+ BEGIN
+	SELECT * FROM vw_proyectos_de_grupos WHERE  gru_nombre = n_group;
+ END??
+ DELIMITER ;
 -- FIN DEL SCRIPT
