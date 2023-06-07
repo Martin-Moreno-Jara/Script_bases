@@ -1,75 +1,39 @@
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA SEDE
 INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
-	VALUES	(1,'sede Bogotá','Bogotá'),
-			(2,'sede Medellín','Medellín'),
-            (3,'sede Manizales','Manizales'),
-            (4,'sede Palmira','Valle del Cauca'),
-            (5,'sede de La Paz','Valledupar'),
-            (6,'sede Amazonia','Leticia'),
-            (7,'sede Orinoquia','Orinoquia'),
-            (8,'sede Caribe','San Andrés'),
-            (9,'sede Tumaco','Nariño');
+	VALUES	(1,'sede Bogotá','Bogotá'),(2,'sede Medellín','Medellín'),(3,'sede Manizales','Manizales'),
+            (4,'sede Palmira','Valle del Cauca'),(5,'sede de La Paz','Valledupar'),(6,'sede Amazonia','Leticia'),
+            (7,'sede Orinoquia','Orinoquia'),(8,'sede Caribe','San Andrés'),(9,'sede Tumaco','Nariño');
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA FACULTAD
     INSERT INTO facultad(fac_id,fac_nombre)
-    VALUES	(1,'Ingenieria'),
-			(2,'Derecho, ciencias políticas y sociales'),
-            (3,'Ciencias humanas'),
-            (4,'Medicina'),
-            (5,'Ciencias'),
-            (6,'Artes'),
-            (7,'Veterinaria y Zootecnia'),
-            (8,'Odontologia'),
-            (9,'Enfermeria'),
-            (10,'Ciencias agrarias'),
-            (11,'Ciencias económicas');
+    VALUES	(1,'Ingenieria'),(2,'Derecho, ciencias políticas y sociales'),
+            (3,'Ciencias humanas'),(4,'Medicina'),(5,'Ciencias'),(6,'Artes'),
+            (7,'Veterinaria y Zootecnia'),(8,'Odontologia'),(9,'Enfermeria'),
+            (10,'Ciencias agrarias'),(11,'Ciencias económicas');
             
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA DEPARTAMENTO
  INSERT INTO departamento(dep_id,dep_nombre,dep_fac_id)
-    VALUES 	(1,'Civil y agrícola',1),
-			(2,'Sistema e industrial',1),
-			(3,'Eléctrica y Electrónica',1),
-            (4,'Mecánica y mecatrónica',1),
-            (5,'Quimica y ambiental',1),
-            (6,'Civil y agrícola',1),
-            (7,'Derecho',2),
-			(8,'Ciencia política',2),
-            (9,'Antropología',3),
-            (10,'Psicología',3),
-            (11,'Filosofía',3),
-            (12,'Salud pública',4),
-            (13,'Escuela de educación médica',4),
-            (14,'Arquitectura',6),
-            (15,'Música',6),
-            (16,'Artes plásticas',6),
-            (17,'Salud animal',7),
-            (18,'Producción animal',7),
-            (19,'Salud oral',8),
-            (20,'Enfermería',9),
-            (21,'Agronomía',10),
-            (22,'Administración y contaduría pública',11),
-            (23,'Economía',11);
+    VALUES 	(1,'Civil y agrícola',1),(2,'Sistema e industrial',1),(3,'Eléctrica y Electrónica',1),
+            (4,'Mecánica y mecatrónica',1),(5,'Quimica y ambiental',1),(6,'Civil y agrícola',1),
+            (7,'Derecho',2),(8,'Ciencia política',2),(9,'Antropología',3),
+            (10,'Psicología',3),(11,'Filosofía',3),(12,'Salud pública',4),
+            (13,'Escuela de educación médica',4),(14,'Arquitectura',6),(15,'Música',6),
+            (16,'Artes plásticas',6),(17,'Salud animal',7),(18,'Producción animal',7),
+            (19,'Salud oral',8),(20,'Enfermería',9),(21,'Agronomía',10),
+            (22,'Administración y contaduría pública',11),(23,'Economía',11);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA PROGRAMA ACADÉMICO
     INSERT INTO programa_academico(prg_id,prg_nombre,prg_cantidadCreditos,prg_tipoPrograma,prg_dep_id)
-    VALUES	(1,'Ingenieria de sistemas y computación',64,'Pregrado',2),
-			(2,'Ingenieria civil',70,'Pregrado',1),
-            (3,'Derecho',65,'Pregrado',7),
-            (4,'Ciencia política',65,'Pregrado',8),
-            (5,'Derecho administrativo',68,'Posgrado',7),
-            (6,'Antropología',68,'Pregrado',9),
-            (7,'Filosofía ',68,'Pregrado',11),
-            (8,'Psicología',68,'Pregrado',10),
-            (9,'Infecciones y salud en el trópico',68,'Posgrado',12),
-            (10,'Medicina',68,'Pregrado',13),
-            (11,'Música',68,'Pregrado',15),
-            (12,'Arquitectura',68,'Pregrado',14),
-            (13,'Musicoterapia',68,'Pregrado',15),
-            (14,'Veterinaria',68,'Pregrado',17),
-            (15,'Administración de empresas',68,'Pregrado',22),
-            (16,'Contaduría pública ',68,'Pregrado',22),
+    VALUES	(1,'Ingenieria de sistemas y computación',64,'Pregrado',2),(2,'Ingenieria civil',70,'Pregrado',1),
+            (3,'Derecho',65,'Pregrado',7),(4,'Ciencia política',65,'Pregrado',8),
+            (5,'Derecho administrativo',68,'Posgrado',7),(6,'Antropología',68,'Pregrado',9),
+            (7,'Filosofía ',68,'Pregrado',11),(8,'Psicología',68,'Pregrado',10),
+            (9,'Infecciones y salud en el trópico',68,'Posgrado',12),(10,'Medicina',68,'Pregrado',13),
+            (11,'Música',68,'Pregrado',15),(12,'Arquitectura',68,'Pregrado',14),
+            (13,'Musicoterapia',68,'Pregrado',15),(14,'Veterinaria',68,'Pregrado',17),
+            (15,'Administración de empresas',68,'Pregrado',22),(16,'Contaduría pública ',68,'Pregrado',22),
             (17,'Economía',68,'Pregrado',23);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EQUIPO

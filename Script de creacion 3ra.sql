@@ -1,4 +1,4 @@
- -- DROP SCHEMA investigacion;
+-- DROP SCHEMA investigacion;
 CREATE SCHEMA investigacion;
 USE Investigacion;
 
