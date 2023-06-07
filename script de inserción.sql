@@ -89,6 +89,33 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 				(13,'Marcadores',13),
 				(14,'Mesas',12),
             	(15,'Resistencias',6);
+
+-- *************************************************************************************************************************************************************
+-- INSERCIÓN DE DATOS EN LA TABLA PROFESOR
+	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_tipoProfesor, pro_tituloPregrado,pro_tituloPosgrado)
+    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial'),
+			(2,'Juan','A',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas'),
+	(3,'Felipe','F',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingeniería Quimica','Maestria en ingeniería Quimica'),
+	(4,'Gabriel','G',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ciencias humanas','Maestria en ciencias humanas'),
+	(5,'Luis','L',28,'luisl@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas'),
+	(6,'Gustavo','G',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial'),
+	(7,'Martin','M',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial'),
+	(8,'Enrique','E',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingenieria Mecanica','Maestria en ingeniería mecanica'),
+	(9,'Sandra','S',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina','Maestria en Medicina'),
+	(10,'Mariana','M',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina Veterinaria','Maestria en Medicina Veterinaria');
+-- *************************************************************************************************************************************************************
+-- INSERCIÓN DE DATOS EN LA TABLA EMPLEADO
+	INSERT INTO empleado (emp_cedula,emp_nombre,emp_apellido,emp_edad,emp_correo,emp_telefono,emp_direccion,emp_tipoEmpleado,emp_cargo)
+    VALUES (1,'Hernando','Rodriguez',39,'HernanRo@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
+		(2,'Ricardo','R',39,'ricardor@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
+		(3,'Cruz','C',39,'cruzc@unal.edu.co','1234512221','Cra 34 #54','Gerente','Vicerrector'),
+		(4,'Sanabria','S',39,'sanabrias@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
+		(5,'Tomas','T',39,'tomast@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
+		(6,'Camila','C',39,'camilac@unal.edu.co','1234512221','Cra 34 #54','Gerente','Ayudante de Vicerrector'),
+		(7,'Maria','M',39,'mariam@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
+		(8,'Jessica','J',39,'jessicaj@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
+		(9,'Mayerly','M',39,'mayerlym@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
+		(10,'David','D',39,'davidd@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio');
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA SEMILLERO
     INSERT INTO semillero(sem_id,sem_nombre,sem_area,sem_lider)
@@ -107,7 +134,19 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 		(4,'CSI','Criminalistica/Medicina Forense',3),
 		(5,'Materials','Ciencia de materiles avanzados',7),
 		(6,'Sistemas simbioticos','Biologia/Ecología',6);
-
+-- *************************************************************************************************************************************************************
+-- INSERCIÓN DE DATOS EN LA TABLA ESTUDIANTE
+    INSERT INTO estudiante(est_cedula, est_nombre,est_apellido, est_edad, est_correo, est_telefono,est_direccion,est_tipoEstudiante,est_gru_id, est_prg_id,est_sem_id)
+    VALUES(1,'Jose','Gonzales',18,'josego@unal.edu.co','310311222','Cra 45a #56','Pregrado',1,1,1)
+    ,(2,'Jonas','J',18,'jonasj@unal.edu.co','310311222','Cra 45a #56','Pregrado',2,3,2),
+		(3,'Julia','J',18,'juliaj@unal.edu.co','310311222','Cra 45a #56','Pregrado',5,5,3),
+		(4,'Gonzo','G',18,'gonzog@unal.edu.co','310311222','Cra 45a #56','Posgrado',3,3,2),
+		(5,'Kevin','K',18,'kevinK@unal.edu.co','310311222','Cra 45a #56','Pregrado',6,8,4),
+		(6,'Bruin','B',18,'bruinb@unal.edu.co','310311222','Cra 45a #56','Pregrado',4,6,1),
+		(7,'Zapato','Z',18,'zapatoz@unal.edu.co','310311222','Cra 45a #56','Posgrado',2,7,5),
+		(8,'Spike','S',18,'spikes@unal.edu.co','310311222','Cra 45a #56','Posgrado',1,10,1),
+		(9,'Bruce','B',18,'bruceb@unal.edu.co','310311222','Cra 45a #56','Pregrado',2,11,5),
+		(10,'Tony','T',18,'tonyt@unal.edu.co','310311222','Cra 45a #56','Posgrado',6,12,6);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA PROYECTO
     INSERT INTO proyecto(pry_id,pry_nombre,pry_propuesta,pry_estado,pry_fechaInicio,pry_gru_id)
@@ -177,45 +216,7 @@ INSERT INTO publicacion(pub_edi_id,pub_pap_id,pub_fechaPublicacion)
 		(4,'Apolo'),
 		(5,'Creed'),
 		(6,'C&T');
--- *************************************************************************************************************************************************************
--- INSERCIÓN DE DATOS EN LA TABLA ESTUDIANTE
-    INSERT INTO estudiante(est_cedula, est_nombre,est_apellido, est_edad, est_correo, est_telefono,est_direccion,est_fechaVinculacion,est_tipoEstudiante,est_gru_id, est_prg_id,est_sem_id)
-    VALUES(1,'Jose','Gonzales',18,'josego@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Pregrado',1,1,1)
-    ,(2,'Jonas','J',18,'jonasj@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Pregrado',2,3,2),
-		(3,'Julia','J',18,'juliaj@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Pregrado',5,5,3),
-		(4,'Gonzo','G',18,'gonzog@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Posgrado',3,3,2),
-		(5,'Kevin','K',18,'kevinK@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Pregrado',6,8,4),
-		(6,'Bruin','B',18,'bruinb@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Pregrado',4,6,1),
-		(7,'Zapato','Z',18,'zapatoz@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Posgrado',2,7,5),
-		(8,'Spike','S',18,'spikes@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Posgrado',1,10,1),
-		(9,'Bruce','B',18,'bruceb@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Pregrado',2,11,5),
-		(10,'Tony','T',18,'tonyt@unal.edu.co','310311222','Cra 45a #56','2022-01-01','Posgrado',6,12,6);
--- *************************************************************************************************************************************************************
--- INSERCIÓN DE DATOS EN LA TABLA PROFESOR
-	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_fechaVinculacion,pro_tipoProfesor, pro_tituloPregrado,pro_tituloPosgrado, pro_horasSemanales,pro_salario)
-    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Ingeniería industrial','Maestria en ingeniería industrial',30,3000000),
-			(2,'Juan','A',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','2009-10-01','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',30,3000000),
-	(3,'Felipe','F',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Catedra','Ingeniería Quimica','Maestria en ingeniería Quimica',30,3000000),
-	(4,'Gabriel','G',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Ciencias humanas','Maestria en ciencias humanas',30,3000000),
-	(5,'Luis','L',28,'luisl@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',30,3000000),
-	(6,'Gustavo','G',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Ingeniería industrial','Maestria en ingeniería industrial',30,3000000),
-	(7,'Martin','M',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Ingeniería industrial','Maestria en ingeniería industrial',30,3000000),
-	(8,'Enrique','E',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Catedra','Ingenieria Mecanica','Maestria en ingeniería mecanica',30,3000000),
-	(9,'Sandra','S',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Medicina','Maestria en Medicina',30,3000000),
-	(10,'Mariana','M',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','2008-10-01','Planta','Medicina Veterinaria','Maestria en Medicina Veterinaria',30,3000000);
--- *************************************************************************************************************************************************************
--- INSERCIÓN DE DATOS EN LA TABLA EMPLEADO
-	INSERT INTO empleado (emp_cedula,emp_nombre,emp_apellido,emp_edad,emp_correo,emp_telefono,emp_direccion,emp_fechaVinculacion,emp_tipoEmpleado,emp_salario,emp_cargo,emp_horasSemanales)
-    VALUES (1,'Hernando','Rodriguez',39,'HernanRo@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
-    (2,'Ricardo','R',39,'ricardor@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
-		(3,'Cruz','C',39,'cruzc@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Gerente',1800000,'Vicerrector',25),
-		(4,'Sanabria','S',39,'sanabrias@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
-		(5,'Tomas','T',39,'tomast@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
-		(6,'Camila','C',39,'camilac@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Gerente',1800000,'Ayudante de Vicerrector',25),
-		(7,'Maria','M',39,'mariam@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
-		(8,'Jessica','J',39,'jessicaj@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
-		(9,'Mayerly','M',39,'mayerlym@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25),
-		(10,'David','D',39,'davidd@unal.edu.co','1234512221','Cra 34 #54','2019-10-10','Asitente',1800000,'Ayudante de laboratorio',25);
+
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EDIFICIO
     INSERT INTO edificio(edf_id,edf_nombre,edf_numSalones,edf_sed_id) 
@@ -265,8 +266,8 @@ INSERT INTO publicacion(pub_edi_id,pub_pap_id,pub_fechaPublicacion)
 			(8,8),(9,9),(10,1),(11,4),(12,2),(13,3);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA FACULTAD-SEDE
- INSERT INTO facultad_sede (fas_sed_id,fas_fac_id)
-	VALUES	(1,1),(2,1),2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),
+ INSERT INTO facultad_sede(fas_sed_id,fas_fac_id)
+			VALUES	(1,1),(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),
 			(3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(4,1),
 			(4,2),(4,3),(4,4),(4,5),(4,6),(4,7),(4,8),(4,9),(4,10),(4,11),(5,1),(5,2),
             (5,3),(5,4),(5,5),(5,6),(5,7),(5,8),(5,9),(5,10),(5,11);
