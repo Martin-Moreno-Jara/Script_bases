@@ -1,8 +1,18 @@
 -- SCRIPT DE CREACIÓN DE VISTAS
 -- *****************************************************************************************************
+-- ESTUDIANTE SIN CONTRASEÑA
+CREATE VIEW vw_estudiante_estudiante AS SELECT 
+est_cedula, est_nombre, est_apellido, est_edad, est_correo, est_telefono, est_direccion, est_tipoEstudiante, est_gru_id, est_prg_id,est_sem_id
+FROM estudiante;
+-- *****************************************************************************************************
+-- VISTA PARA LA TABLA DE GRUPOS, JOIN DE GRUPO Y PROFESOR
+CREATE VIEW vw_group_table AS SELECT 
+gru_nombre,gru_area,gru_numIntegrantes,gru_numProyectos,gru_numPapers,concat(pro_nombre,' ',pro_apellido)
+FROM grupo_investigacion join profesor ON (grupo_investigacion.gru_lider=profesor.pro_cedula);
+-- *****************************************************************************************************
 -- VISTA CON JOIN DE GRUPO DE INVESTIGACIÓN Y PROYECTO
 CREATE VIEW vw_proyecto_grupo AS
- SELECT gru_id,gru_nombre,gru_numIntegrantes,gru_numPapers,pry_id,pry_gru_id,pry_nombre, pry_estado 
+ SELECT gru_id,gru_nombre,gru_numIntegrantes,gru_numPapers,pry_id,pry_gru_id,pry_nombre, pry_estado,gru_numProyectos 
  FROM proyecto JOIN grupo_investigacion ON (grupo_investigacion.gru_id= proyecto.pry_gru_id);
  -- *****************************************************************************************************
  -- VISTA CON JOIN DE PAPER, PROYECTO Y GRUPO DE INVESTIGACIÓN.

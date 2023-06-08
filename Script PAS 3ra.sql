@@ -131,8 +131,7 @@ DELIMITER ;
 DELIMITER ??
 CREATE PROCEDURE llenar_tabla_grupos()
 BEGIN 
-SELECT gru_nombre,gru_area,gru_numIntegrantes,gru_numProyectos,gru_numPapers,concat(pro_nombre,' ',pro_apellido)
- FROM grupo_investigacion join profesor ON (grupo_investigacion.gru_lider=profesor.pro_cedula);
+SELECT * from vw_group_table;
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
@@ -262,4 +261,14 @@ DELIMITER ??
 	SELECT * FROM vw_proyectos_de_grupos WHERE  gru_nombre = n_group;
  END??
  DELIMITER ;
+ -- *****************************************************************************************************
+-- Filtra los grupos de la tabla de grupos de investigación
+drop procedure filtrar_grupos;
+DELIMITER ??
+ CREATE PROCEDURE filtrar_grupos(IN nombre VARCHAR (30),IN area VARCHAR(50))
+ BEGIN
+	SELECT * FROM vw_group_table WHERE gru_area LIKE area OR gru_nombre LIKE nombre ;
+ END??
+ DELIMITER ;
+ call filtrar_grupos('SDFDSFSD','Computacion Cientifica')
 -- FIN DEL SCRIPT

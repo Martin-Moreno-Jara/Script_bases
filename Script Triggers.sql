@@ -19,4 +19,13 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
+-- TRIGGER PARA AUMENTAR NUMERO DE PROYECTOS EN GRUPO CUANDO SE INSERTA EN PROYECTOS
+DELIMITER ??
+CREATE TRIGGER inc_num_proyectos AFTER INSERT ON proyecto
+FOR EACH ROW
+BEGIN 
+	UPDATE vw_proyecto_grupo SET gru_numProyectos=gru_numProyectos+1 WHERE NEW.pry_gru_id=gru_id;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
 -- FIN DEL SCRIPT
