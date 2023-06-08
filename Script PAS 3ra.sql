@@ -2,7 +2,7 @@ Use investigacion;
 -- SCRIPT DE CREACIÓN DE PROCEDIMIENTOS ALMACENADOS
 -- *****************************************************************************************************
 -- LOGIN PARA ESTUDIANTE
-drop procedure login_estudiante;
+-- drop procedure login_estudiante;
 DELIMITER ??
 CREATE PROCEDURE login_estudiante(IN corr VARCHAR(50),IN contra VARCHAR(50) )
 BEGIN
@@ -12,16 +12,69 @@ BEGIN
     SELECT convert(aes_decrypt(est_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM estudiante WHERE est_correo like corr;
 	IF estudianteCor LIKE corr AND pass LIKE contra
 		THEN 
-        select estudianteCor,pass;
         select est_cedula from estudiante WHERE est_correo like corr;
 	ELSE
 		SELECT -1;
     END IF ;
 END ??
 DELIMITER ;
-SELECT convert(aes_decrypt(est_contrasena,'clave')using utf8mb3) AS pass FROM estudiante WHERE est_correo like 'josego@unal.edu.co';
-call login_estudiante('josego@unal.edu.co','123');
-call login_estudiante('josego@al.edu.co','123');
+-- *****************************************************************************************************
+-- LOGIN PARA PROFESOR drop procedure login_profesor;
+DELIMITER ??
+CREATE PROCEDURE login_profesor(IN corr VARCHAR(50),IN contra VARCHAR(50) )
+BEGIN
+	DECLARE profeCor VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT pro_correo INTO profeCor FROM profesor WHERE pro_correo like corr;
+    SELECT convert(aes_decrypt(pro_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM profesor WHERE pro_correo like corr;
+	IF profeCor LIKE corr AND pass LIKE contra
+		THEN 
+        select pro_cedula from profesor WHERE pro_correo like corr;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+-- call login_profesor('felipeg@unal.edu.co','123');
+-- *****************************************************************************************************
+-- LOGIN PARA EMPLEADO  drop procedure login_empleado;
+DELIMITER ??
+CREATE PROCEDURE login_empleado(IN corr VARCHAR(50),IN contra VARCHAR(50) )
+BEGIN
+	DECLARE empCor VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT emp_correo INTO empCor FROM empleado WHERE emp_correo like corr;
+    SELECT convert(aes_decrypt(emp_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM empleado WHERE emp_correo like corr;
+	IF empCor LIKE corr AND pass LIKE contra
+		THEN 
+        select emp_cedula from empleado WHERE emp_correo like corr;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+
+-- call login_empleado('felipeg@unal.edu.co','123');
+
+-- LOGIN PARA GRUPOS  drop procedure login_empleado;
+DELIMITER ??
+CREATE PROCEDURE login_grupo(IN id INT,IN contra VARCHAR(50) )
+BEGIN
+	DECLARE gruId VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT gru_id INTO gruId FROM grupo_investigacion WHERE gru_id=id;
+    SELECT convert(aes_decrypt(gru_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM grupo_investigacion WHERE gru_id=id;
+	IF gruId=id AND pass LIKE contra
+		THEN 
+        select gru_id from grupo_investigacion WHERE gru_id=id;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+
+-- call login_empleado('felipeg@unal.edu.co','123');
+
 -- *****************************************************************************************************
 -- CREAR UN USUARIO DE TIPO ESTUDIANTE E INSERTARLO EN LA TABLA 
 -- drop procedure estudiante_register;
@@ -97,6 +150,10 @@ CREATE PROCEDURE ver_all_publicaciones()
 BEGIN
 	SELECT * FROM ver_publicaciones;
 END??
+DELIMITER ;
+-- *****************************************************************************************************
+-- MUESTRA LA INFORMACIÓN PARA LA TABLA DE PUBLICACIONES O PAPERS
+DELIMITER ??
 CREATE PROCEDURE buscar_publicacion
 (IN bp_title VARCHAR(80), IN bp_tema VARCHAR(80), IN bp_grupo VARCHAR(80), IN bp_proyecto VARCHAR(80))
 BEGIN
@@ -131,33 +188,6 @@ BEGIN
 	SELECT * FROM perfil WHERE est_cedula = ced;
 END??
 DELIMITER ;
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN PARA LLENAR LA TABLA DE PUBLICACIONES
-DELIMITER ??
-CREATE PROCEDURE ver_all_publicaciones()
-BEGIN
-	SELECT * FROM ver_publicaciones;
-END??
-DELIMITER ;
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN FILTRADA DE LA TABLA DE PUBLICACIONES
-DELIMITER ??
-CREATE PROCEDURE buscar_publicacion
-(IN bp_title VARCHAR(80), IN bp_tema VARCHAR(80), IN bp_grupo VARCHAR(80), IN bp_proyecto VARCHAR(80))
-BEGIN
-			SELECT * FROM ver_publicaciones 
-            WHERE pap_titulo= bp_title 
-            OR pap_tema=bp_tema OR gru_nombre= bp_grupo OR pry_nombre= bp_proyecto; 
-END??
-DELIMITER ;
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN PARA LA TABLA DE PROYECTOS
-  DELIMITER ??
- CREATE PROCEDURE ver_all_proyectos()
- BEGIN
-	SELECT * FROM ver_proyectos;
- END??
- DELIMITER ; 
 -- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA UN PROYECTO EN ESPECIFICO
 DELIMITER ??

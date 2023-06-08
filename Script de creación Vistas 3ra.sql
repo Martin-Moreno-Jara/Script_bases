@@ -23,12 +23,6 @@ ON (estudiante.est_prg_id=programa_academico.prg_id))
 ON (grupo_investigacion.gru_id= estudiante.est_gru_id)) 
 ON (semillero.sem_id=estudiante.est_sem_id);
 
- -- *****************************************************************************************************
--- VISTA CON JOIN GRUPO DE INVESTIGACIÓN, PAPER Y PROYECTO
- CREATE VIEW ver_publicaciones AS 
- SELECT pap_titulo, pap_tema, pry_nombre, gru_nombre
- FROM  grupo_investigacion 
- JOIN (paper JOIN proyecto ON (paper.pap_pry_id = proyecto.pry_id)) ON (grupo_investigacion.gru_id=proyecto.pry_gru_id);
 -- *****************************************************************************************************
 -- VISTA CON JOIN DE PROYECTO Y GRUPO DE INVESTIGACIÓN
  CREATE VIEW ver_proyectos AS
