@@ -1,6 +1,28 @@
 Use investigacion;
 -- SCRIPT DE CREACIÓN DE PROCEDIMIENTOS ALMACENADOS
 -- *****************************************************************************************************
+-- LOGIN PARA ESTUDIANTE
+drop procedure login_estudiante;
+DELIMITER ??
+CREATE PROCEDURE login_estudiante(IN corr VARCHAR(50),IN contra VARCHAR(50) )
+BEGIN
+	DECLARE estudianteCor VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT est_correo INTO estudianteCor FROM estudiante WHERE est_correo like corr;
+    SELECT convert(aes_decrypt(est_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM estudiante WHERE est_correo like corr;
+	IF estudianteCor LIKE corr AND pass LIKE contra
+		THEN 
+        select estudianteCor,pass;
+        select est_cedula from estudiante WHERE est_correo like corr;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+SELECT convert(aes_decrypt(est_contrasena,'clave')using utf8mb3) AS pass FROM estudiante WHERE est_correo like 'josego@unal.edu.co';
+call login_estudiante('josego@unal.edu.co','123');
+call login_estudiante('josego@al.edu.co','123');
+-- *****************************************************************************************************
 -- CREAR UN USUARIO DE TIPO ESTUDIANTE E INSERTARLO EN LA TABLA 
 -- drop procedure estudiante_register;
 DELIMITER ??
@@ -9,7 +31,7 @@ CREATE PROCEDURE estudiante_register
 IN telefono VARCHAR(50),IN direccion VARCHAR(50),IN tipo VARCHAR(50),IN programa VARCHAR(50),pass VARCHAR(50))
 BEGIN
 	INSERT INTO estudiante(est_cedula,est_nombre,est_apellido,est_edad,est_correo,est_telefono,est_direccion,est_fechaVinculacion,est_tipoEstudiante,est_prg_id)
-    VALUES (cedula,nombre,apellido,edad,correo,telefono,direccion,'2020-01-01',tipo,1);
+    VALUES (cedula,nombre,apellido,edad,correo,telefono,direccion,tipo,1);
     SET @createUserQuery = CONCAT('CREATE USER \'', correo, '\'@\'localhost\' IDENTIFIED BY \'', pass, '\';');
         PREPARE createUserStmt FROM @createUserQuery;
         EXECUTE createUserStmt;
