@@ -18,7 +18,6 @@ CREATE TABLE facultad(
     fac_nombre VARCHAR(45) NOT NULL
 	);
 
-
 -- *************************************************************************************************************************************************************
 -- CREACIÓN E INSERCIÓN DE DATOS EN LA TABLA DEPARTAMENTO
 CREATE TABLE departamento(
@@ -68,7 +67,8 @@ CREATE TABLE grupo_investigacion(
     gru_numPapers INT DEFAULT 0,
     gru_area VARCHAR(45) NOT NULL,
     gru_numProyectos INT DEFAULT 0,
-    gru_lider INT NOT NULL
+    gru_lider INT NOT NULL,
+    gru_contrasena BLOB
 	);
     
 -- *************************************************************************************************************************************************************
@@ -138,7 +138,7 @@ CREATE TABLE estudiante(
     est_gru_id INT DEFAULT NULL,
     est_prg_id INT NOT NULL,
     est_sem_id INT DEFAULT NULL,
-    est_contrasena VARCHAR(50) DEFAULT NULL,
+    est_contrasena BLOB DEFAULT NULL,
     FOREIGN KEY (est_gru_id) REFERENCES grupo_investigacion(gru_id),
     FOREIGN KEY (est_prg_id)  REFERENCES programa_academico(prg_id),
     FOREIGN KEY (est_sem_id)  REFERENCES semillero(sem_id)
@@ -159,7 +159,7 @@ CREATE TABLE profesor(
     pro_tituloPosgrado VARCHAR(45),
     pro_gru_id INT DEFAULT NULL,
     pro_sem_id INT DEFAULT NULL,
-    pro_contrasena VARCHAR(50) DEFAULT NULL,
+    pro_contrasena BLOB DEFAULT NULL,
     pro_dep_id INT DEFAULT NULL,
     FOREIGN KEY (pro_gru_id) REFERENCES grupo_investigacion(gru_id),
 	FOREIGN KEY (pro_sem_id)  REFERENCES semillero(sem_id),
@@ -182,7 +182,7 @@ CREATE TABLE empleado(
     emp_direccion VARCHAR(50),
     emp_tipoEmpleado VARCHAR(45) NOT NULL,
     emp_cargo VARCHAR(50) NOT NULL,
-	emp_contrasena VARCHAR(50) DEFAULT NULL
+	emp_contrasena BLOB DEFAULT NULL
     );
     
 -- *************************************************************************************************************************************************************

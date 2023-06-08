@@ -56,30 +56,30 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA PROFESOR
-	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_tipoProfesor, pro_tituloPregrado,pro_tituloPosgrado)
-    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial'),
-			(2,'Juan','A',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas'),
-	(3,'Felipe','F',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingeniería Quimica','Maestria en ingeniería Quimica'),
-	(4,'Gabriel','G',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ciencias humanas','Maestria en ciencias humanas'),
-	(5,'Luis','L',28,'luisl@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas'),
-	(6,'Gustavo','G',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial'),
-	(7,'Martin','M',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial'),
-	(8,'Enrique','E',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingenieria Mecanica','Maestria en ingeniería mecanica'),
-	(9,'Sandra','S',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina','Maestria en Medicina'),
-	(10,'Mariana','M',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina Veterinaria','Maestria en Medicina Veterinaria');
+	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_tipoProfesor, pro_tituloPregrado,pro_tituloPosgrado,pro_contrasena)
+    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',aes_encrypt('123','clave')),
+			(2,'Juan','Armando',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',aes_encrypt('123','clave')),
+	(3,'Felipe','Fonseca',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingeniería Quimica','Maestria en ingeniería Quimica',aes_encrypt('123','clave')),
+	(4,'Gabriel','Guerrero',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ciencias humanas','Maestria en ciencias humanas',aes_encrypt('123','clave')),
+	(5,'Luis','Suarez',28,'luis@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',aes_encrypt('123','clave')),
+	(6,'Gustavo','Gattuso',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',aes_encrypt('123','clave')),
+	(7,'Martin','Moreno',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',aes_encrypt('123','clave')),
+	(8,'Enrique','Peña',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingenieria Mecanica','Maestria en ingeniería mecanica',aes_encrypt('123','clave')),
+	(9,'Sandra','Sierra',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina','Maestria en Medicina',aes_encrypt('123','clave')),
+	(10,'Mariana','Mendez',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina Veterinaria','Maestria en Medicina Veterinaria',aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EMPLEADO
-	INSERT INTO empleado (emp_cedula,emp_nombre,emp_apellido,emp_edad,emp_correo,emp_telefono,emp_direccion,emp_tipoEmpleado,emp_cargo)
-    VALUES (1,'Hernando','Rodriguez',39,'HernanRo@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
-		(2,'Ricardo','R',39,'ricardor@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
-		(3,'Cruz','C',39,'cruzc@unal.edu.co','1234512221','Cra 34 #54','Gerente','Vicerrector'),
-		(4,'Sanabria','S',39,'sanabrias@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
-		(5,'Tomas','T',39,'tomast@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
-		(6,'Camila','C',39,'camilac@unal.edu.co','1234512221','Cra 34 #54','Gerente','Ayudante de Vicerrector'),
-		(7,'Maria','M',39,'mariam@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
-		(8,'Jessica','J',39,'jessicaj@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
-		(9,'Mayerly','M',39,'mayerlym@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio'),
-		(10,'David','D',39,'davidd@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio');
+	INSERT INTO empleado (emp_cedula,emp_nombre,emp_apellido,emp_edad,emp_correo,emp_telefono,emp_direccion,emp_tipoEmpleado,emp_cargo,emp_contrasena)
+    VALUES (1,'Hernando','Rodriguez',42,'HernanRo@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave')),
+		(2,'Ricardo','Rojas',26,'ricardor@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave')),
+		(3,'Camilo','Cruz',56,'cruzc@unal.edu.co','1234512221','Cra 34 #54','Gerente','Vicerrector',aes_encrypt('123','clave')),
+		(4,'Jose','Sanabria',32,'sanabrias@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave')),
+		(5,'Josep','Guardiola',39,'guardiola@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave')),
+		(6,'Roberto','De Zerbi',39,'Roberto@unal.edu.co','1234512221','Cra 34 #54','Gerente','Ayudante de Vicerrector',aes_encrypt('123','clave')),
+		(7,'Maria','Mendez',50,'mariam@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave')),
+		(8,'Gustavo','Fring',45,'Gus@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave')),
+		(9,'Mayerly','Martinez',39,'mayerlym@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave')),
+		(10,'David','Moyes',29,'davidm@unal.edu.co','1234512221','Cra 34 #54','Asitente','Ayudante de laboratorio',aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA SEMILLERO
     INSERT INTO semillero(sem_id,sem_nombre,sem_area,sem_lider)
@@ -91,26 +91,26 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 		(6,'semillero5','informatica',7);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA GRUPO DE INVESTIGACIÓN
-    INSERT INTO grupo_investigacion(gru_id,gru_nombre,gru_area,gru_lider)
-    VALUES (1,'MIDAS','Mineria de datos',1),
-    (2,'5G','Computacion Cientifica',9),
-		(3,'Uqbar','Seguridad Informatica',5),
-		(4,'CSI','Criminalistica/Medicina Forense',3),
-		(5,'Materials','Ciencia de materiles avanzados',7),
-		(6,'Sistemas simbioticos','Biologia/Ecología',6);
+    INSERT INTO grupo_investigacion(gru_id,gru_nombre,gru_area,gru_lider,gru_contrasena)
+    VALUES (1,'MIDAS','Mineria de datos',1,aes_encrypt('123','clave')),
+    (2,'5G','Computacion Cientifica',9,aes_encrypt('123','clave')),
+		(3,'Uqbar','Seguridad Informatica',5,aes_encrypt('123','clave')),
+		(4,'CSI','Criminalistica/Medicina Forense',3,aes_encrypt('123','clave')),
+		(5,'Materials','Ciencia de materiles avanzados',7,aes_encrypt('123','clave')),
+		(6,'Sistemas simbioticos','Biologia/Ecología',6,aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA ESTUDIANTE
-    INSERT INTO estudiante(est_cedula, est_nombre,est_apellido, est_edad, est_correo, est_telefono,est_direccion,est_tipoEstudiante,est_gru_id, est_prg_id,est_sem_id)
-    VALUES(1,'Jose','Gonzales',18,'josego@unal.edu.co','310311222','Cra 45a #56','Pregrado',1,1,1)
-    ,(2,'Jonas','J',18,'jonasj@unal.edu.co','310311222','Cra 45a #56','Pregrado',2,3,2),
-		(3,'Julia','J',18,'juliaj@unal.edu.co','310311222','Cra 45a #56','Pregrado',5,5,3),
-		(4,'Gonzo','G',18,'gonzog@unal.edu.co','310311222','Cra 45a #56','Posgrado',3,3,2),
-		(5,'Kevin','K',18,'kevinK@unal.edu.co','310311222','Cra 45a #56','Pregrado',6,8,4),
-		(6,'Bruin','B',18,'bruinb@unal.edu.co','310311222','Cra 45a #56','Pregrado',4,6,1),
-		(7,'Zapato','Z',18,'zapatoz@unal.edu.co','310311222','Cra 45a #56','Posgrado',2,7,5),
-		(8,'Spike','S',18,'spikes@unal.edu.co','310311222','Cra 45a #56','Posgrado',1,10,1),
-		(9,'Bruce','B',18,'bruceb@unal.edu.co','310311222','Cra 45a #56','Pregrado',2,11,5),
-		(10,'Tony','T',18,'tonyt@unal.edu.co','310311222','Cra 45a #56','Posgrado',6,12,6);
+    INSERT INTO estudiante(est_cedula, est_nombre,est_apellido, est_edad, est_correo, est_telefono,est_direccion,est_tipoEstudiante,est_gru_id, est_prg_id,est_sem_id,est_contrasena)
+    VALUES(1,'Jose','Gonzales',18,'josego@unal.edu.co','310311222','Cra 45a #56','Pregrado',1,1,1,aes_encrypt('123','clave'))
+    ,(2,'Jonas','Jimenez',22,'jonasj@unal.edu.co','310311222','Cra 50 #58','Pregrado',2,3,2,aes_encrypt('321','clave')),
+		(3,'Julia','Martinez',17,'juliaj@unal.edu.co','310311222','Cra 78a #98','Pregrado',5,5,3,aes_encrypt('123','clave')),
+		(4,'Gonzalo','Ramirez',20,'gonzog@unal.edu.co','310311222','Cra 30 #32','Posgrado',3,3,2,aes_encrypt('456','clave')),
+		(5,'Kevin','De Bruyne',23,'kevinK@unal.edu.co','310311222','Cra 75b #55','Pregrado',6,8,4,aes_encrypt('654','clave')),
+		(6,'Declan','Rice',25,'declan@unal.edu.co','310311222','Cra 45a #68','Pregrado',4,6,1,aes_encrypt('123','clave')),
+		(7,'Paulo','Hernandez',18,'paulos@unal.edu.co','310311222','Cra 80 #43','Posgrado',2,7,5,aes_encrypt('789','clave')),
+		(8,'Julian','Alvarez',17,'julian@unal.edu.co','310311222','Cra 59a #10','Posgrado',1,10,1,aes_encrypt('987','clave')),
+		(9,'Erling','Haaland',17,'erling@unal.edu.co','310311222','Cra 22a #45','Pregrado',2,11,5,aes_encrypt('123','clave')),
+		(10,'Toni','Kroos',20,'toni@unal.edu.co','310311222','Cra 45a #56','Posgrado',6,12,6,aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA PROYECTO
     INSERT INTO proyecto(pry_id,pry_nombre,pry_propuesta,pry_estado,pry_fechaInicio,pry_gru_id)
@@ -131,21 +131,21 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 		(3,'El arte de la zoologóa',38,'Zoología',3),
 		(4,'Sociedad y nosotros',28,'Sociología',4),
 		(5,'Ensayo sobre la depresión',8,'Psicología',5),
-		(6,'p6',63,'Matemáticas',6),
-		(7,'p7',13,'tema4',7),
-		(8,'p8',52,'tema2',8),
-		(9,'p9',666,'tema3',9),
-		(10,'p10',88,'tema2',1),
-		(11,'p11',77,'tema5',2),
-		(12,'p12',38,'tema3',3),
-		(13,'p13',28,'tema4',4),
-		(14,'p14',8,'tema3',5),
-		(15,'p15',63,'tema5',6),
-		(16,'p16',13,'tema4',7),
-		(17,'p17',52,'tema2',8),
-		(18,'p18',666,'tema3',9),
-		(19,'p19',88,'tema2',1),
-		(20,'p20',77,'tema5',2);
+		(6,'Peces del pacífico',63,'Matemáticas',6),
+		(7,'Matrices en la vida diaria',13,'tema4',7),
+		(8,'Aplicaciones de la inteligencia artificial',52,'tema2',8),
+		(9,'Arte contemporaneo y moderno',666,'tema3',9),
+		(10,'Campesinado colombiano',88,'tema2',1),
+		(11,'Matemáticas del nuevo milenio',77,'tema5',2),
+		(12,'Industria farmaceutica en Colombia',38,'tema3',3),
+		(13,'Desigualdad y meritocracia',28,'tema4',4),
+		(14,'Música del siglo XVIII',8,'tema3',5),
+		(15,'Ensayo de la revolución cubana',63,'tema5',6),
+		(16,'Cuarta revolución industrial',13,'tema4',7),
+		(17,'Clonación de células madre',52,'tema2',8),
+		(18,'Nuevas teconologías en Colombia',666,'tema3',9),
+		(19,'Problemas de la alimentación colombiana',88,'tema2',1),
+		(20,'Ensayo de la ceguera',77,'tema5',2);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EDITORIAL
     INSERT INTO editorial(edi_id,edi_nombre,edi_direccion,edi_telefono)
