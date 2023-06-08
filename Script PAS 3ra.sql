@@ -151,17 +151,6 @@ BEGIN
 END??
 DELIMITER ;
 -- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN PARA LA TABLA DE PUBLICACIONES O PAPERS
-DELIMITER ??
-CREATE PROCEDURE buscar_publicacion
-(IN bp_title VARCHAR(80), IN bp_tema VARCHAR(80), IN bp_grupo VARCHAR(80), IN bp_proyecto VARCHAR(80))
-BEGIN
-			SELECT * FROM ver_publicaciones 
-            WHERE pap_titulo= bp_title 
-            OR pap_tema=bp_tema OR gru_nombre= bp_grupo OR pry_nombre= bp_proyecto; 
-END??
-DELIMITER ;
--- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA LA TABLA DE LABORATORIOS
 -- drop procedure llenar_tabla_laboratorios;
 DELIMITER ??
@@ -187,16 +176,6 @@ BEGIN
 	SELECT * FROM perfil WHERE est_cedula = ced;
 END??
 DELIMITER ;
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN PARA UN PROYECTO EN ESPECIFICO
-DELIMITER ??
- CREATE PROCEDURE consultar_proyecto(IN v_p_nombre VARCHAR (60),IN v_gru_nombre VARCHAR (60),IN v_p_estado VARCHAR (60))
- BEGIN
-	SELECT * FROM ver_proyectos 
-    WHERE pry_nombre= v_p_nombre 
-    OR gru_nombre = v_gru_nombre OR pry_estado=v_p_estado;
- END??
- DELIMITER ;
 -- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA LOS PROFESORES
  DELIMITER ??
@@ -263,12 +242,94 @@ DELIMITER ??
  DELIMITER ;
  -- *****************************************************************************************************
 -- Filtra los grupos de la tabla de grupos de investigación
-drop procedure filtrar_grupos;
 DELIMITER ??
  CREATE PROCEDURE filtrar_grupos(IN nombre VARCHAR (30),IN area VARCHAR(50))
  BEGIN
-	SELECT * FROM vw_group_table WHERE gru_area LIKE area OR gru_nombre LIKE nombre ;
+	IF nombre LIKE '' AND area LIKE '-'
+		THEN SELECT * FROM vw_group_table;
+	ELSEIF nombre LIKE '' 
+		THEN SELECT * FROM vw_group_table WHERE gru_area LIKE area;
+	ELSEIF area LIKE '-' 
+		THEN SELECT * FROM vw_group_table WHERE gru_nombre LIKE nombre ;
+	ELSE 
+		SELECT * FROM vw_group_table WHERE gru_area LIKE area AND gru_nombre LIKE nombre ;
+    END IF;
  END??
  DELIMITER ;
- call filtrar_grupos('SDFDSFSD','Computacion Cientifica')
+-- *****************************************************************************************************
+-- Obtener todos los grupos para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_grupos()
+BEGIN
+	SELECT gru_nombre FROM grupo_investigacion;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Filtrar los proyectos para la tabla
+DELIMITER ??
+ CREATE PROCEDURE filtrar_proyectos(IN nombre VARCHAR (30),IN grupo VARCHAR(50),IN estado VARCHAR (30))
+ BEGIN
+	IF nombre LIKE '' AND grupo LIKE '-' AND estado LIKE '-'
+		THEN SELECT * FROM ver_proyectos;
+	ELSEIF nombre LIKE '' AND grupo LIKE '-' -- nombre y grupo es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE pry_estado LIKE estado;
+    ELSEIF nombre LIKE '' AND estado LIKE '-' -- nombre y estado es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo;
+    ELSEIF grupo LIKE '-' AND estado LIKE '-' -- grupo y estado es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE pry_nombre LIKE nombre;
+	ELSEIF nombre LIKE '' -- nombre es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_estado LIKE estado;
+	ELSEIF grupo LIKE '-'-- grupo es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE pry_nombre LIKE nombre AND pry_estado LIKE estado;
+    ELSEIF estado LIKE '-'-- estado es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_nombre LIKE nombre ;
+	ELSE 
+		 SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_estado LIKE estado AND pry_nombre LIKE nombre;
+    END IF;
+ END??
+ DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los temas para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_temas()
+BEGIN
+	SELECT DISTINCT pap_tema FROM paper;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Obtener todos los proyectos para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_proyectos()
+BEGIN
+	SELECT DISTINCT pry_nombre FROM proyecto;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Filtrar las publicaciones para la tabla 
+-- drop procedure filtrar_publicaciones;
+DELIMITER ??
+ CREATE PROCEDURE filtrar_publicaciones(IN titulo VARCHAR (30),IN tema VARCHAR(50),IN grupo VARCHAR (30),IN proyecto VARCHAR (30))
+ BEGIN
+	SELECT * FROM ver_publicaciones WHERE 
+    gru_nombre LIKE grupo OR pry_nombre LIKE proyecto OR pap_titulo LIKE titulo OR pap_tema LIKE tema;
+ END??
+ DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los edificios para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_edificios()
+BEGIN
+	SELECT DISTINCT edf_nombre FROM edificio;
+END ??
+DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los tipos de laboratorio para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_labTipo()
+BEGIN
+	SELECT DISTINCT lab_tipoLaboratorio FROM laboratorio;
+END ??
+DELIMITER ;
+
+-- *****************************************************************************************************
 -- FIN DEL SCRIPT

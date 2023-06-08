@@ -155,32 +155,15 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA PUBLICACIÓN
 INSERT INTO publicacion(pub_edi_id,pub_pap_id,pub_fechaPublicacion)
-    VALUES(1,1,'2020-10-01'),
-    (1,2,'2020-10-01'),
-		(2,3,'2020-10-01'),
-		(3,4,'2020-10-01'),
-		(1,5,'2020-10-01'),
-		(2,6,'2020-10-01'),
-		(3,7,'2020-10-01'),
-		(1,8,'2020-10-01'),
-		(2,9,'2020-10-01'),
-		(3,10,'2020-10-01'),
-		(1,11,'2020-10-01'),
-		(2,12,'2020-10-01'),
-		(3,13,'2020-10-01'),
-		(1,14,'2020-10-01'),
-		(2,15,'2020-10-01'),
-		(3,16,'2020-10-01');
+    VALUES(1,1,'2020-10-01'),(1,2,'2020-10-01'),(2,3,'2020-10-01'),(3,4,'2020-10-01'),
+		(1,5,'2020-10-01'),(2,6,'2020-10-01'),(3,7,'2020-10-01'),(1,8,'2020-10-01'),
+		(2,9,'2020-10-01'),(3,10,'2020-10-01'),(1,11,'2020-10-01'),(2,12,'2020-10-01'),
+		(3,13,'2020-10-01'),(1,14,'2020-10-01'),(2,15,'2020-10-01'),(3,16,'2020-10-01');
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA BIBLIOTECA
 	INSERT INTO biblioteca(bib_id,bib_nombre)
-    VALUES (1,'Hermes'),
-    (2,'Diomedez'),
-		(3,'Gabriel Garcia Marques'),
-		(4,'Apolo'),
-		(5,'Creed'),
-		(6,'C&T');
-
+    VALUES (1,'Hermes'),(2,'Diomedez'),(3,'Gabriel Garcia Marques'),
+		(4,'Apolo'),(5,'Creed'),(6,'C&T');
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EDIFICIO
     INSERT INTO edificio(edf_id,edf_nombre,edf_numSalones,edf_sed_id) 
@@ -191,31 +174,28 @@ INSERT INTO publicacion(pub_edi_id,pub_pap_id,pub_fechaPublicacion)
 		(6,'C y T',30,3),
 		(7,'Julio Garavito',30,4),
 		(8,'Hemeroteca',30,4),
-		(9,'Edificio9',30,5),
-		(10,'Edificio10',30,5),
-		(11,'Edificio11',30,6),
-		(12,'Edificio12',30,6),
-		(13,'Edificio13',30,7),
-		(14,'Edificio14',30,7),
-		(15,'Edificio15',30,8),
-		(16,'Edificio16',30,8),
-		(17,'Edificio17',30,9),
-		(18,'Edificio18',20,9);
+		(9,'Edificio de enfermería',30,5),
+		(10,'Edificio de medicina',30,5),
+		(11,'Edificio de ciencias',30,6),
+		(12,'Edificio de agronomía',30,6),
+		(13,'IPARM',30,7),
+		(14,'Edificio de Quimica',30,7),
+		(15,'Edificio de odontología',30,8);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA LABORATORIO
     INSERT INTO laboratorio(lab_id,lab_capacidad,lab_nombre,lab_tipoLaboratorio,lab_edf_id,lab_ayudante)
     VALUES (1,23,'Laboratorio Curie','Física',1,1),(2,23,'L2','Física',2,2),
-		(3,23,'L3','Física',3,3),
+		(3,23,'Lab3','Quimica',3,3),
 		(4,23,'L4','Física',4,4),
 		(5,23,'L5','Física',5,5),
-		(6,23,'L6','Física',6,6),
+		(6,23,'L6','Quimica',6,6),
 		(7,23,'L7','Física',7,7),
-		(8,23,'L8','Física',8,8),
+		(8,23,'L8','Quimica',8,8),
 		(9,23,'L9','Física',9,9),
-		(10,23,'L10','Física',10,10),
-		(11,23,'L11','Física',11,1),
+		(10,23,'L10','Electrónica',10,10),
+		(11,23,'L11','Electrónica',11,1),
 		(12,23,'L12','Física',12,2),
-		(13,23,'L13','Física',13,3);
+		(13,23,'L13','Sistemas',13,3);
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EQUIPO LABORATORIO
 	INSERT INTO equipos_laboratorio(eql_lab_id,eql_equ_id)

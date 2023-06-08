@@ -15,6 +15,9 @@ CREATE VIEW vw_proyecto_grupo AS
  SELECT gru_id,gru_nombre,gru_numIntegrantes,gru_numPapers,pry_id,pry_gru_id,pry_nombre, pry_estado,gru_numProyectos 
  FROM proyecto JOIN grupo_investigacion ON (grupo_investigacion.gru_id= proyecto.pry_gru_id);
  -- *****************************************************************************************************
+-- VISTA CON JOIN DE GRUPO DE INVESTIGACIÓN Y PROYECTO PARA LA TABLA
+
+ -- *****************************************************************************************************
  -- VISTA CON JOIN DE PAPER, PROYECTO Y GRUPO DE INVESTIGACIÓN.
  CREATE VIEW ver_publicaciones AS 
  SELECT pap_titulo, pap_tema, pry_nombre, gru_nombre
