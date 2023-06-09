@@ -63,7 +63,7 @@ CREATE TABLE semillero(
 CREATE TABLE grupo_investigacion(
 	gru_id INT NOT NULL PRIMARY KEY,
 	gru_nombre VARCHAR(45) NOT NULL,
-    gru_numIntegrantes INT DEFAULT 0,
+    gru_numIntegrantes INT DEFAULT 1,
     gru_numPapers INT DEFAULT 0,
     gru_area VARCHAR(45) NOT NULL,
     gru_numProyectos INT DEFAULT 0,
@@ -78,8 +78,8 @@ CREATE TABLE proyecto(
     pry_nombre VARCHAR(45) NOT NULL,
     pry_propuesta VARCHAR(45) NOT NULL,
     pry_estado VARCHAR(45) NOT NULL,
-    pry_fechaInicio DATE NOT NULL,
-    pry_fechaFin DATE,
+    pry_fechaInicio DATE DEFAULT NULL ,
+    pry_fechaFin DATE DEFAULT NULL,
     pry_gru_id INT NOT NULL,
     FOREIGN KEY(pry_gru_id) REFERENCES grupo_investigacion(gru_id)
 	);

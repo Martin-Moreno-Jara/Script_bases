@@ -57,16 +57,17 @@ DELIMITER ;
 -- call login_empleado('felipeg@unal.edu.co','123');
 
 -- LOGIN PARA GRUPOS  drop procedure login_empleado;
+-- DROP procedure login_grupo;
 DELIMITER ??
-CREATE PROCEDURE login_grupo(IN id INT,IN contra VARCHAR(50) )
+CREATE PROCEDURE login_grupo(IN nombre VARCHAR(50),IN contra VARCHAR(50) )
 BEGIN
-	DECLARE gruId VARCHAR(50);
+	DECLARE nom VARCHAR(50);
     DECLARE pass VARCHAR(50);
-    SELECT gru_id INTO gruId FROM grupo_investigacion WHERE gru_id=id;
-    SELECT convert(aes_decrypt(gru_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM grupo_investigacion WHERE gru_id=id;
-	IF gruId=id AND pass LIKE contra
+    SELECT gru_nombre INTO nom FROM grupo_investigacion WHERE gru_nombre=nombre;
+    SELECT convert(aes_decrypt(gru_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM grupo_investigacion WHERE gru_nombre=nombre;
+	IF nom=nombre AND pass LIKE contra
 		THEN 
-        select gru_id from grupo_investigacion WHERE gru_id=id;
+        select gru_id from grupo_investigacion WHERE gru_nombre=nombre;
 	ELSE
 		SELECT -1;
     END IF ;
@@ -488,5 +489,87 @@ DELIMITER ??
     END IF;
  END??
  DELIMITER ;
+-- *****************************************************************************************************
+-- Muestra los proyectos pero solo de un grupo en especifico
+-- drop procedure get_proyectos_un_grupo;
+DELIMITER ??
+CREATE PROCEDURE get_proyectos_un_grupo(IN id INT)
+BEGIN
+	SELECT * FROM ver_proyectos_grupo  WHERE gru_id=id;
+END ??
+DELIMITER ; 
+-- call get_proyectos_un_grupo(2);
+-- *****************************************************************************************************
+-- Muestra las publicaciones pero solo de un grupo en especifico
+DELIMITER ??
+CREATE PROCEDURE get_publicaciones_un_grupo(IN id INT)
+BEGIN
+	SELECT * FROM ver_publicaciones_grupo  WHERE gru_id=id;
+END ??
+DELIMITER ; 
+-- call get_publicaciones_un_grupo(4);
+-- *****************************************************************************************************
+-- Muestra los proyectos pero solo de un grupo en especifico
+-- drop procedure get_proyectos_un_grupoCombobox;
+DELIMITER ??
+CREATE PROCEDURE get_proyectos_un_grupoCombobox(IN id INT)
+BEGIN
+	SELECT DISTINCT pry_nombre FROM ver_proyectos_grupo  WHERE gru_id=id;
+END ??
+DELIMITER ; 
+-- *****************************************************************************************************
+-- Perfil del profesor
+DELIMITER ??
+CREATE PROCEDURE perfil_profesor_mostrar(IN cedula INT)
+BEGIN
+	SELECT * FROM perfil_profesor WHERE pro_cedula=cedula;
+END ??
+DELIMITER ;
+
+-- *****************************************************************************************************
+-- Editar perfil del profesor
+DELIMITER ??
+CREATE PROCEDURE editar_profesor_perfil(IN ced INT, IN tel VARCHAR(75), IN direc VARCHAR(75))
+BEGIN
+	UPDATE perfil_profesor SET pro_telefono=tel, pro_direccion=direc WHERE pro_cedula=ced; 
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- crear un grupo como profesor
+DELIMITER ??
+CREATE PROCEDURE crear_grupo
+(IN id INT, IN nom VARCHAR(100),IN area VARCHAR(100),IN lider INT,IN contra VARCHAR(100))
+BEGIN
+	INSERT INTO vw_grupo_crear VALUES (id,nom,area,lider,aes_encrypt(contra,'clave'));
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- crear un proyecto como grupo
+DELIMITER ??
+CREATE PROCEDURE crear_proyecto
+(IN id INT, IN nom VARCHAR(100),IN prop VARCHAR(100),IN estado VARCHAR(100),IN gru INT)
+BEGIN
+	INSERT INTO vw_insert_proyecto VALUES(id,nom,prop,estado,gru);
+END ??
+DELIMITER ;
+select * from vw_insert_proyecto;
+-- *****************************************************************************************************
+-- OBTENER EL NUM DE PROYECTO SEGUN EL NOMBRE
+DELIMITER ??
+CREATE PROCEDURE get_proyId(IN nom VARCHAR(50))
+	BEGIN
+		SELECT pry_id FROM proyecto WHERE pry_nombre LIKE nom;
+    END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- crear una publicación como grupo
+DELIMITER ??
+CREATE PROCEDURE crear_publicacion
+(IN id INT, IN title VARCHAR(100),IN pag INT,IN tema VARCHAR(100),IN pry INT)
+BEGIN
+	INSERT INTO vw_insert_pubi VALUES(id,title,pag,tema,pry);
+END ??
+DELIMITER ;
+select * from vw_insert_proyecto;
 -- *****************************************************************************************************
 -- FIN DEL SCRIPT

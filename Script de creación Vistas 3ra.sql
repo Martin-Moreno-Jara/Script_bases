@@ -44,20 +44,16 @@ ON (semillero.sem_id=estudiante.est_sem_id);
  JOIN grupo_investigacion ON (grupo_investigacion.gru_id= proyecto.pry_gru_id);
 -- *****************************************************************************************************
 -- VISTA PARA PERFIL DE PROFESOR, JOIN DE PROFESOR, PROGRAMA ACADEMICO, ESTUDIANTE, SEMILLERO (Puede cambiar)
+-- drop VIEW perfil_profesor;
 CREATE VIEW perfil_profesor AS
-SELECT 
-pro_nombre, pro_apellido, pro_edad, pro_correo, 
-pro_telefono, pro_direccion, 
-pro_cedula, programa_academico.prg_nombre, 
-grupo_investigacion.gru_nombre, semillero.sem_nombre 
-FROM   programa_academico  RIGHT JOIN
- (estudiante right JOIN 
-(semillero right JOIN 
-(profesor LEFT JOIN grupo_investigacion
-ON (profesor.pro_cedula= grupo_investigacion.gru_lider)) 
-ON (semillero.sem_id=profesor.pro_sem_id)) 
-ON (estudiante.est_gru_id= grupo_investigacion.gru_id)) 
-ON ( programa_academico.prg_id= estudiante.est_prg_id) GROUP BY(pro_nombre);
+SELECT pro_nombre, pro_apellido, pro_edad, pro_correo, 
+pro_telefono, pro_direccion,pro_tipoProfesor,pro_cedula,gru_nombre,sem_nombre,dep_nombre
+FROM profesor JOIN grupo_investigacion on (pro_gru_id=gru_id) JOIN semillero ON (sem_id=pro_sem_id)
+JOIN departamento ON (dep_id=pro_dep_id);
+
+
+
+
 -- *****************************************************************************************************
 -- VISTA CON JOIN DE ESTUDIANTES Y GRUPO DE INVESTIGACIÓN
 CREATE VIEW lista_integrantes_gi AS 
@@ -77,3 +73,26 @@ CREATE VIEW vw_laboratorios AS SELECT lab_id,lab_nombre,lab_tipoLaboratorio,edf_
 CREATE VIEW vw_estudiante_tabla AS SELECT concat(est_nombre,' ',est_apellido) AS nombre,est_correo,prg_nombre 
 from estudiante join programa_academico on (prg_id=est_prg_id);
 -- *****************************************************************************************************
+-- VISTA CON JOIN DE PROYECTO Y GRUPO DE INVESTIGACIÓN VISTA INVESTIGACIÓN
+ CREATE VIEW ver_proyectos_grupo AS
+ SELECT pry_nombre, gru_nombre, pry_estado, gru_id
+ FROM proyecto 
+ JOIN grupo_investigacion ON (grupo_investigacion.gru_id= proyecto.pry_gru_id);
+  -- *****************************************************************************************************
+ -- VISTA CON JOIN DE PAPER, PROYECTO Y GRUPO DE INVESTIGACIÓN DE UN GRUPO
+ CREATE VIEW ver_publicaciones_grupo AS 
+ SELECT pap_titulo, pap_tema, pry_nombre, gru_nombre, gru_id
+ FROM  grupo_investigacion JOIN (paper JOIN proyecto ON (paper.pap_pry_id = proyecto.pry_id)) 
+ ON (grupo_investigacion.gru_id=proyecto.pry_gru_id);
+  -- *****************************************************************************************************
+ -- Grupo sin los defalt en 0
+ CREATE VIEW vw_grupo_crear AS
+ SELECT gru_id,gru_nombre,gru_area,gru_lider,gru_contrasena FROM grupo_investigacion;
+-- *****************************************************************************************************
+ -- proyecto con los atributos para insertar
+ CREATE VIEW vw_insert_proyecto AS
+ SELECT pry_id,pry_nombre,pry_propuesta,pry_estado,pry_gru_id FROM proyecto;
+-- *****************************************************************************************************
+ -- papers con los atributos para insertar
+ CREATE VIEW vw_insert_pubi AS SELECT pap_id,pap_titulo,pap_numPaginas,pap_tema,pap_pry_id FROM paper;
+   -- *****************************************************************************************************
