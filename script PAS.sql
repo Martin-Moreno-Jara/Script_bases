@@ -3,6 +3,7 @@
 SCRIPT PAS - VISTAS INTERFAZ DE USUARIO -------------------------
 **************************************************************************************************
 */
+-- ramita de gabito
 -- nombre completo concatenado? 
 -- todos los dsatos del perfil del estudiante
 -- SELECT * FROM estudiante;
