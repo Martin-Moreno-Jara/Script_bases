@@ -87,6 +87,9 @@ ON (semillero.sem_id=profesor.pro_sem_id))
 ON (estudiante.est_gru_id= grupo_investigacion.gru_id)) 
 ON ( programa_academico.prg_id= estudiante.est_prg_id) GROUP BY(pro_nombre);
  
+CREATE VIEW to_edit_profesor AS
+SELECT pro_cedula, pro_telefono, pro_direccion FROM profesor;
+ 
  DELIMITER ??
 CREATE PROCEDURE mostrar_perfiles_profesores ()
 BEGIN
@@ -96,6 +99,59 @@ CREATE PROCEDURE mostrar_un_perfil_profesor(IN ced INT)
 BEGIN
 	SELECT * FROM perfil_profesor WHERE pro_cedula = ced;
 END??
+
+CREATE PROCEDURE editar_profesor(IN ced INT, IN tel VARCHAR(75), IN direc VARCHAR(75))
+BEGIN
+	UPDATE to_edit_profesor SET pro_telefono=tel, pro_direccion=direc WHERE pro_cedula=ced; 
+END ??
 DELIMITER ;
 
+ -- CREAR VISTA PERFIL GRUPO
+ CREATE VIEW perfil_grupo AS
+ SELECT gru_id, gru_nombre,gru_numIntegrantes,
+ gru_numPapers,gru_area, gru_numProyectos, 
+ CONCAT(pro_nombre,' ',pro_apellido) as Profesor_lider
+ FROM grupo_investigacion JOIN profesor  ON (grupo_investigacion.gru_lider=profesor.pro_cedula);
+ 
+ -- CREAR PROCEDIMIENTOS ALMACENADOS perfil grupo
+ DELIMITER ??
+ CREATE PROCEDURE mostrar_perfiles_grupo() 
+ BEGIN
+	SELECT * FROM perfil_grupo;
+ END ??
+ 
+ CREATE PROCEDURE mostrar_perfil_grupo(IN id INT)
+ BEGIN
+	SELECT * FROM perfil_grupo WHERE gru_id=id;
+ END ??
+ 
+ CREATE PROCEDURE editar_nombre_grupo (IN id INT, IN nombre VARCHAR(75))
+ BEGIN
+	UPDATE perfil_grupo SET gru_nombre=nombre WHERE gru_id = id;
+ END ??
+ DELIMITER ;
+ 
+ -- CREACION VISTA DE PERFIL EMPLEADO
+ CREATE VIEW perfil_empleado AS
+ SELECT emp_nombre,emp_apellido,emp_edad,emp_correo,
+ emp_telefono,emp_direccion,emp_cedula
+ FROM empleado;
+ 
+ -- PROCEDIMIENTO ALMACENADO perfiles empleado
+ DELIMITER ??
+ CREATE PROCEDURE mostrar_perfiles_empleado()
+ BEGIN 
+		SELECT * FROM perfil_empleado;
+ END ??
+ 
+ CREATE PROCEDURE mostrar_perfil_un_empleado(IN ced INT)
+BEGIN
+	SELECT * FROM perfil_empleado WHERE emp_cedula = ced;
+END ??
 
+CREATE PROCEDURE editar_perfil_empleado(IN ced INT, IN telefono VARCHAR(75), IN dir VARCHAR(75))
+BEGIN
+	UPDATE perfil_empleado SET emp_telefono=telefono, emp_direccion=dir WHERE emp_cedula = ced;
+END ??
+ DELIMITER ;
+ 
