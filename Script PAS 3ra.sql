@@ -336,7 +336,11 @@ DELIMITER ??
 	IF titulo LIKE '' AND tema LIKE '-' AND grupo LIKE '-' AND proyecto LIKE '-'
 		THEN SELECT * FROM ver_publicaciones;
 	ELSEIF tema LIKE '-' AND grupo LIKE '-' AND proyecto LIKE '-' -- Solo buscar por titulo
-		THEN SELECT * FROM ver_publicaciones WHERE pap_titulo LIKE titulo;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF titulo LIKE '' AND grupo LIKE '-' AND proyecto LIKE '-' -- Solo buscar por tema
 		 THEN SELECT * FROM ver_publicaciones WHERE pap_tema LIKE tema;
     ELSEIF titulo LIKE '' AND tema LIKE '-' AND proyecto LIKE '-' -- Solo buscar por grupo
@@ -344,11 +348,23 @@ DELIMITER ??
     ELSEIF titulo LIKE '' AND tema LIKE '-' AND grupo LIKE '-' -- Solo buscar por proyecto
 		THEN SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE proyecto;
 	ELSEIF grupo LIKE '-' AND proyecto LIKE '-' -- por titulo y tema
-		THEN SELECT * FROM ver_publicaciones WHERE pap_titulo LIKE titulo AND pap_tema LIKE tema;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE pap_tema LIKE \'', tema, '\' AND pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF tema LIKE '-'  AND proyecto LIKE '-' -- por titulo y grupo
-		THEN SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE grupo AND pap_titulo LIKE titulo;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE \'',grupo,'\' AND pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF  tema LIKE '-' AND grupo LIKE '-' -- por titulo y proyecto
-		THEN SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE proyecto AND pap_titulo LIKE titulo;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE \'',proyecto,'\' AND pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF titulo LIKE ''  AND proyecto LIKE '-' -- por tema y grupo
 		THEN SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE grupo AND pap_tema LIKE tema;
     ELSEIF titulo LIKE '' AND grupo LIKE '-'  -- por tema y proyecto
@@ -356,23 +372,34 @@ DELIMITER ??
     ELSEIF titulo LIKE '' AND tema LIKE '-'  -- por grupo y proyecto
 		THEN SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE grupo AND pry_nombre LIKE proyecto;
 	ELSEIF proyecto LIKE '-' -- por titulo y tema y grupo
-		THEN SELECT * FROM ver_publicaciones WHERE 
-		 gru_nombre LIKE grupo AND pap_titulo LIKE titulo AND pap_tema LIKE tema;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE pap_tema LIKE \'', tema, '\' AND gru_nombre LIKE \'',grupo,'\' AND pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF grupo LIKE '-' -- por titulo y tema y proyecto
-		THEN SELECT * FROM ver_publicaciones WHERE 
-		pry_nombre LIKE proyecto AND pap_titulo LIKE titulo AND pap_tema LIKE tema;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE pap_tema LIKE \'', tema, '\' AND pry_nombre LIKE \'',proyecto,'\' AND pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF titulo LIKE ''  -- por tema y grupo y proyecto
 		THEN SELECT * FROM ver_publicaciones WHERE 
 		 gru_nombre LIKE grupo AND pry_nombre LIKE proyecto AND pap_tema LIKE tema;
     ELSEIF tema LIKE '-'  -- por titulo y grupo y proyecto
-		THEN SELECT * FROM ver_publicaciones WHERE 
-		 gru_nombre LIKE grupo AND pry_nombre LIKE proyecto AND pap_titulo LIKE titulo;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE \'', proyecto, '\' AND gru_nombre LIKE \'',grupo,'\' AND pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSE -- todas
-		SELECT * FROM ver_publicaciones WHERE 
-		gru_nombre LIKE grupo AND pry_nombre LIKE proyecto AND pap_titulo LIKE titulo AND pap_tema LIKE tema;
+			SET @query = CONCAT('SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE \'', proyecto, '\' AND pap_tema LIKE \'', tema, '\' AND gru_nombre LIKE \'',grupo,'\' AND pap_titulo LIKE "%', titulo, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
     END IF;
  END??
  DELIMITER ;
+ call filtrar_publicaciones('sa','-','-','-');
  -- *****************************************************************************************************
 -- Obtener todos los edificios para el combobox
 DELIMITER ??
