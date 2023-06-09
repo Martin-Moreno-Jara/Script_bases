@@ -367,6 +367,7 @@ END ??
 DELIMITER ;
 -- *****************************************************************************************************
 -- Filtrar los laboratorios para la tabla
+-- drop procedure filtrar_laboratorios;
 DELIMITER ??
  CREATE PROCEDURE filtrar_laboratorios(IN nombre VARCHAR (30),IN tipo VARCHAR(50),IN edificio VARCHAR (30))
  BEGIN
@@ -377,18 +378,34 @@ DELIMITER ??
     ELSEIF nombre LIKE '' AND edificio LIKE '-' -- nombre y estado es indiferente
 		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo;
     ELSEIF tipo LIKE '-' AND edificio LIKE '-' -- grupo y estado es indiferente
-		THEN SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
 	ELSEIF nombre LIKE '' -- nombre es indiferente
 		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo AND edf_nombre LIKE edificio;
 	ELSEIF tipo LIKE '-'-- grupo es indiferente
-		THEN SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre AND edf_nombre LIKE edificio;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM vw_laboratorios WHERE edf_nombre LIKE \'', edificio, '\' AND lab_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF edificio LIKE '-'-- estado es indiferente
-		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo AND lab_nombre LIKE nombre ;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE \'', tipo, '\' AND lab_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
 	ELSE 
-		 SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre AND lab_tipoLaboratorio LIKE tipo AND edf_nombre LIKE edificio;
+		 SET @query = CONCAT('SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE \'', tipo, '\' AND lab_nombre LIKE "%', nombre, '%" AND edf_nombre LIKE \'', edificio, '\'');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     END IF;
  END??
  DELIMITER ;
+ call filtrar_laboratorios('a','Quimica','-');
  -- *****************************************************************************************************
 -- Obtener todos los estudiantes para la tabla de crear grupos y añadir
 DELIMITER ??
