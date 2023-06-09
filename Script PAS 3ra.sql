@@ -1,6 +1,81 @@
 Use investigacion;
 -- SCRIPT DE CREACIÓN DE PROCEDIMIENTOS ALMACENADOS
 -- *****************************************************************************************************
+-- LOGIN PARA ESTUDIANTE
+-- drop procedure login_estudiante;
+DELIMITER ??
+CREATE PROCEDURE login_estudiante(IN corr VARCHAR(50),IN contra VARCHAR(50) )
+BEGIN
+	DECLARE estudianteCor VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT est_correo INTO estudianteCor FROM estudiante WHERE est_correo like corr;
+    SELECT convert(aes_decrypt(est_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM estudiante WHERE est_correo like corr;
+	IF estudianteCor LIKE corr AND pass LIKE contra
+		THEN 
+        select est_cedula from estudiante WHERE est_correo like corr;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- LOGIN PARA PROFESOR drop procedure login_profesor;
+DELIMITER ??
+CREATE PROCEDURE login_profesor(IN corr VARCHAR(50),IN contra VARCHAR(50) )
+BEGIN
+	DECLARE profeCor VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT pro_correo INTO profeCor FROM profesor WHERE pro_correo like corr;
+    SELECT convert(aes_decrypt(pro_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM profesor WHERE pro_correo like corr;
+	IF profeCor LIKE corr AND pass LIKE contra
+		THEN 
+        select pro_cedula from profesor WHERE pro_correo like corr;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+-- call login_profesor('felipeg@unal.edu.co','123');
+-- *****************************************************************************************************
+-- LOGIN PARA EMPLEADO  drop procedure login_empleado;
+DELIMITER ??
+CREATE PROCEDURE login_empleado(IN corr VARCHAR(50),IN contra VARCHAR(50) )
+BEGIN
+	DECLARE empCor VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT emp_correo INTO empCor FROM empleado WHERE emp_correo like corr;
+    SELECT convert(aes_decrypt(emp_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM empleado WHERE emp_correo like corr;
+	IF empCor LIKE corr AND pass LIKE contra
+		THEN 
+        select emp_cedula from empleado WHERE emp_correo like corr;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+
+-- call login_empleado('felipeg@unal.edu.co','123');
+
+-- LOGIN PARA GRUPOS  drop procedure login_empleado;
+DELIMITER ??
+CREATE PROCEDURE login_grupo(IN id INT,IN contra VARCHAR(50) )
+BEGIN
+	DECLARE gruId VARCHAR(50);
+    DECLARE pass VARCHAR(50);
+    SELECT gru_id INTO gruId FROM grupo_investigacion WHERE gru_id=id;
+    SELECT convert(aes_decrypt(gru_contrasena,'clave')using utf8mb4) AS pass INTO pass FROM grupo_investigacion WHERE gru_id=id;
+	IF gruId=id AND pass LIKE contra
+		THEN 
+        select gru_id from grupo_investigacion WHERE gru_id=id;
+	ELSE
+		SELECT -1;
+    END IF ;
+END ??
+DELIMITER ;
+
+-- call login_empleado('felipeg@unal.edu.co','123');
+
+-- *****************************************************************************************************
 -- CREAR UN USUARIO DE TIPO ESTUDIANTE E INSERTARLO EN LA TABLA 
 -- drop procedure estudiante_register;
 DELIMITER ??
@@ -9,7 +84,7 @@ CREATE PROCEDURE estudiante_register
 IN telefono VARCHAR(50),IN direccion VARCHAR(50),IN tipo VARCHAR(50),IN programa VARCHAR(50),pass VARCHAR(50))
 BEGIN
 	INSERT INTO estudiante(est_cedula,est_nombre,est_apellido,est_edad,est_correo,est_telefono,est_direccion,est_fechaVinculacion,est_tipoEstudiante,est_prg_id)
-    VALUES (cedula,nombre,apellido,edad,correo,telefono,direccion,'2020-01-01',tipo,1);
+    VALUES (cedula,nombre,apellido,edad,correo,telefono,direccion,tipo,1);
     SET @createUserQuery = CONCAT('CREATE USER \'', correo, '\'@\'localhost\' IDENTIFIED BY \'', pass, '\';');
         PREPARE createUserStmt FROM @createUserQuery;
         EXECUTE createUserStmt;
@@ -56,8 +131,7 @@ DELIMITER ;
 DELIMITER ??
 CREATE PROCEDURE llenar_tabla_grupos()
 BEGIN 
-SELECT gru_nombre,gru_area,gru_numIntegrantes,gru_numProyectos,gru_numPapers,concat(pro_nombre,' ',pro_apellido)
- FROM grupo_investigacion join profesor ON (grupo_investigacion.gru_lider=profesor.pro_cedula);
+SELECT * from vw_group_table;
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
@@ -75,13 +149,6 @@ CREATE PROCEDURE ver_all_publicaciones()
 BEGIN
 	SELECT * FROM ver_publicaciones;
 END??
-CREATE PROCEDURE buscar_publicacion
-(IN bp_title VARCHAR(80), IN bp_tema VARCHAR(80), IN bp_grupo VARCHAR(80), IN bp_proyecto VARCHAR(80))
-BEGIN
-			SELECT * FROM ver_publicaciones 
-            WHERE pap_titulo= bp_title 
-            OR pap_tema=bp_tema OR gru_nombre= bp_grupo OR pry_nombre= bp_proyecto; 
-END??
 DELIMITER ;
 -- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA LA TABLA DE LABORATORIOS
@@ -89,8 +156,7 @@ DELIMITER ;
 DELIMITER ??
 CREATE PROCEDURE llenar_tabla_laboratorios()
 BEGIN
-	SELECT lab_id,lab_nombre,lab_tipoLaboratorio,edf_nombre,concat(emp_nombre,' ',emp_apellido) 
-	FROM laboratorio JOIN empleado ON (emp_cedula =lab_ayudante) JOIN edificio ON (lab_edf_id=edf_id);
+	SELECT * FROM vw_laboratorios;
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
@@ -109,43 +175,6 @@ BEGIN
 	SELECT * FROM perfil WHERE est_cedula = ced;
 END??
 DELIMITER ;
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN PARA LLENAR LA TABLA DE PUBLICACIONES
-DELIMITER ??
-CREATE PROCEDURE ver_all_publicaciones()
-BEGIN
-	SELECT * FROM ver_publicaciones;
-END??
-DELIMITER ;
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN FILTRADA DE LA TABLA DE PUBLICACIONES
-DELIMITER ??
-CREATE PROCEDURE buscar_publicacion
-(IN bp_title VARCHAR(80), IN bp_tema VARCHAR(80), IN bp_grupo VARCHAR(80), IN bp_proyecto VARCHAR(80))
-BEGIN
-			SELECT * FROM ver_publicaciones 
-            WHERE pap_titulo= bp_title 
-            OR pap_tema=bp_tema OR gru_nombre= bp_grupo OR pry_nombre= bp_proyecto; 
-END??
-DELIMITER ;
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN PARA LA TABLA DE PROYECTOS
-  DELIMITER ??
- CREATE PROCEDURE ver_all_proyectos()
- BEGIN
-	SELECT * FROM ver_proyectos;
- END??
- DELIMITER ; 
--- *****************************************************************************************************
--- MUESTRA LA INFORMACIÓN PARA UN PROYECTO EN ESPECIFICO
-DELIMITER ??
- CREATE PROCEDURE consultar_proyecto(IN v_p_nombre VARCHAR (60),IN v_gru_nombre VARCHAR (60),IN v_p_estado VARCHAR (60))
- BEGIN
-	SELECT * FROM ver_proyectos 
-    WHERE pry_nombre= v_p_nombre 
-    OR gru_nombre = v_gru_nombre OR pry_estado=v_p_estado;
- END??
- DELIMITER ;
 -- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA LOS PROFESORES
  DELIMITER ??
@@ -210,4 +239,179 @@ DELIMITER ??
 	SELECT * FROM vw_proyectos_de_grupos WHERE  gru_nombre = n_group;
  END??
  DELIMITER ;
+ -- *****************************************************************************************************
+-- Filtra los grupos de la tabla de grupos de investigación
+DELIMITER ??
+ CREATE PROCEDURE filtrar_grupos(IN nombre VARCHAR (30),IN area VARCHAR(50))
+ BEGIN
+	IF nombre LIKE '' AND area LIKE '-'
+		THEN SELECT * FROM vw_group_table;
+	ELSEIF nombre LIKE '' 
+		THEN SELECT * FROM vw_group_table WHERE gru_area LIKE area;
+	ELSEIF area LIKE '-' 
+		THEN SELECT * FROM vw_group_table WHERE gru_nombre LIKE nombre ;
+	ELSE 
+		SELECT * FROM vw_group_table WHERE gru_area LIKE area AND gru_nombre LIKE nombre ;
+    END IF;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- Obtener todos los grupos para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_grupos()
+BEGIN
+	SELECT gru_nombre FROM grupo_investigacion;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Filtrar los proyectos para la tabla
+DELIMITER ??
+ CREATE PROCEDURE filtrar_proyectos(IN nombre VARCHAR (30),IN grupo VARCHAR(50),IN estado VARCHAR (30))
+ BEGIN
+	IF nombre LIKE '' AND grupo LIKE '-' AND estado LIKE '-'
+		THEN SELECT * FROM ver_proyectos;
+	ELSEIF nombre LIKE '' AND grupo LIKE '-' -- nombre y grupo es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE pry_estado LIKE estado;
+    ELSEIF nombre LIKE '' AND estado LIKE '-' -- nombre y estado es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo;
+    ELSEIF grupo LIKE '-' AND estado LIKE '-' -- grupo y estado es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE pry_nombre LIKE nombre;
+	ELSEIF nombre LIKE '' -- nombre es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_estado LIKE estado;
+	ELSEIF grupo LIKE '-'-- grupo es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE pry_nombre LIKE nombre AND pry_estado LIKE estado;
+    ELSEIF estado LIKE '-'-- estado es indiferente
+		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_nombre LIKE nombre ;
+	ELSE 
+		 SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_estado LIKE estado AND pry_nombre LIKE nombre;
+    END IF;
+ END??
+ DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los temas para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_temas()
+BEGIN
+	SELECT DISTINCT pap_tema FROM paper;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Obtener todos los proyectos para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_proyectos()
+BEGIN
+	SELECT DISTINCT pry_nombre FROM proyecto;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Filtrar las publicaciones para la tabla 
+-- drop procedure filtrar_publicaciones;
+DELIMITER ??
+ CREATE PROCEDURE filtrar_publicaciones(IN titulo VARCHAR (30),IN tema VARCHAR(50),IN grupo VARCHAR (30),IN proyecto VARCHAR (30))
+ BEGIN
+	IF titulo LIKE '' AND tema LIKE '-' AND grupo LIKE '-' AND proyecto LIKE '-'
+		THEN SELECT * FROM ver_publicaciones;
+	ELSEIF tema LIKE '-' AND grupo LIKE '-' AND proyecto LIKE '-' -- Solo buscar por titulo
+		THEN SELECT * FROM ver_publicaciones WHERE pap_titulo LIKE titulo;
+    ELSEIF titulo LIKE '' AND grupo LIKE '-' AND proyecto LIKE '-' -- Solo buscar por tema
+		 THEN SELECT * FROM ver_publicaciones WHERE pap_tema LIKE tema;
+    ELSEIF titulo LIKE '' AND tema LIKE '-' AND proyecto LIKE '-' -- Solo buscar por grupo
+		THEN SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE grupo;
+    ELSEIF titulo LIKE '' AND tema LIKE '-' AND grupo LIKE '-' -- Solo buscar por proyecto
+		THEN SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE proyecto;
+	ELSEIF grupo LIKE '-' AND proyecto LIKE '-' -- por titulo y tema
+		THEN SELECT * FROM ver_publicaciones WHERE pap_titulo LIKE titulo AND pap_tema LIKE tema;
+    ELSEIF tema LIKE '-'  AND proyecto LIKE '-' -- por titulo y grupo
+		THEN SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE grupo AND pap_titulo LIKE titulo;
+    ELSEIF  tema LIKE '-' AND grupo LIKE '-' -- por titulo y proyecto
+		THEN SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE proyecto AND pap_titulo LIKE titulo;
+    ELSEIF titulo LIKE ''  AND proyecto LIKE '-' -- por tema y grupo
+		THEN SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE grupo AND pap_tema LIKE tema;
+    ELSEIF titulo LIKE '' AND grupo LIKE '-'  -- por tema y proyecto
+		THEN SELECT * FROM ver_publicaciones WHERE pry_nombre LIKE proyecto AND pap_tema LIKE tema;
+    ELSEIF titulo LIKE '' AND tema LIKE '-'  -- por grupo y proyecto
+		THEN SELECT * FROM ver_publicaciones WHERE gru_nombre LIKE grupo AND pry_nombre LIKE proyecto;
+	ELSEIF proyecto LIKE '-' -- por titulo y tema y grupo
+		THEN SELECT * FROM ver_publicaciones WHERE 
+		 gru_nombre LIKE grupo AND pap_titulo LIKE titulo AND pap_tema LIKE tema;
+    ELSEIF grupo LIKE '-' -- por titulo y tema y proyecto
+		THEN SELECT * FROM ver_publicaciones WHERE 
+		pry_nombre LIKE proyecto AND pap_titulo LIKE titulo AND pap_tema LIKE tema;
+    ELSEIF titulo LIKE ''  -- por tema y grupo y proyecto
+		THEN SELECT * FROM ver_publicaciones WHERE 
+		 gru_nombre LIKE grupo AND pry_nombre LIKE proyecto AND pap_tema LIKE tema;
+    ELSEIF tema LIKE '-'  -- por titulo y grupo y proyecto
+		THEN SELECT * FROM ver_publicaciones WHERE 
+		 gru_nombre LIKE grupo AND pry_nombre LIKE proyecto AND pap_titulo LIKE titulo;
+    ELSE -- todas
+		SELECT * FROM ver_publicaciones WHERE 
+		gru_nombre LIKE grupo AND pry_nombre LIKE proyecto AND pap_titulo LIKE titulo AND pap_tema LIKE tema;
+    END IF;
+ END??
+ DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los edificios para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_edificios()
+BEGIN
+	SELECT DISTINCT edf_nombre FROM edificio;
+END ??
+DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los tipos de laboratorio para el combobox
+DELIMITER ??
+CREATE PROCEDURE get_labTipo()
+BEGIN
+	SELECT DISTINCT lab_tipoLaboratorio FROM laboratorio;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Filtrar los laboratorios para la tabla
+DELIMITER ??
+ CREATE PROCEDURE filtrar_laboratorios(IN nombre VARCHAR (30),IN tipo VARCHAR(50),IN edificio VARCHAR (30))
+ BEGIN
+	IF nombre LIKE '' AND tipo LIKE '-' AND edificio LIKE '-'
+		THEN SELECT * FROM vw_laboratorios;
+	ELSEIF nombre LIKE '' AND tipo LIKE '-' -- nombre y grupo es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE edf_nombre LIKE edificio;
+    ELSEIF nombre LIKE '' AND edificio LIKE '-' -- nombre y estado es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo;
+    ELSEIF tipo LIKE '-' AND edificio LIKE '-' -- grupo y estado es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre;
+	ELSEIF nombre LIKE '' -- nombre es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo AND edf_nombre LIKE edificio;
+	ELSEIF tipo LIKE '-'-- grupo es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre AND edf_nombre LIKE edificio;
+    ELSEIF edificio LIKE '-'-- estado es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo AND lab_nombre LIKE nombre ;
+	ELSE 
+		 SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre AND lab_tipoLaboratorio LIKE tipo AND edf_nombre LIKE edificio;
+    END IF;
+ END??
+ DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los estudiantes para la tabla de crear grupos y añadir
+DELIMITER ??
+CREATE PROCEDURE llenar_estudiantes()
+BEGIN
+	SELECT * from vw_estudiante_tabla;
+END ??
+DELIMITER ;
+ -- *****************************************************************************************************
+-- Filtra los estudiantes
+DELIMITER ??
+ CREATE PROCEDURE filtrar_estudiantes(IN corr VARCHAR (30),IN program VARCHAR(50))
+ BEGIN
+	IF corr LIKE '' AND program LIKE '-'
+		THEN SELECT * FROM vw_estudiante_tabla;
+	ELSEIF corr LIKE '' 
+		THEN SELECT * FROM vw_estudiante_tabla WHERE prg_nombre LIKE program;
+	ELSEIF program LIKE '-' 
+		THEN SELECT * FROM vw_estudiante_tabla WHERE est_correo LIKE corr ;
+	ELSE 
+		SELECT * FROM vw_estudiante_tabla WHERE est_correo LIKE corr AND prg_nombre LIKE program ;
+    END IF;
+ END??
+ DELIMITER ;
+-- *****************************************************************************************************
 -- FIN DEL SCRIPT
