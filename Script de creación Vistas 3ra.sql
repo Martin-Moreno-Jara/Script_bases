@@ -70,5 +70,10 @@ SELECT concat(est_nombre," ",est_apellido  ) as Nombre_Completo, est_tipoEstudia
  FROM paper 
  JOIN proyecto  ON (paper.pap_pry_id = proyecto.pry_id);
 -- *****************************************************************************************************
+-- VISTA CON JOIN DE LABORATORIO, EMPLEADO Y EDIFICIO
+CREATE VIEW vw_laboratorios AS SELECT lab_id,lab_nombre,lab_tipoLaboratorio,edf_nombre,concat(emp_nombre,' ',emp_apellido) 
+	FROM laboratorio JOIN empleado ON (emp_cedula =lab_ayudante) JOIN edificio ON (lab_edf_id=edf_id);
 -- *****************************************************************************************************
+CREATE VIEW vw_estudiante_tabla AS SELECT concat(est_nombre,' ',est_apellido) AS nombre,est_correo,prg_nombre 
+from estudiante join programa_academico on (prg_id=est_prg_id);
 -- *****************************************************************************************************

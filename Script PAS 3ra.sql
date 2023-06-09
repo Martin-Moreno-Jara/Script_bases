@@ -156,8 +156,7 @@ DELIMITER ;
 DELIMITER ??
 CREATE PROCEDURE llenar_tabla_laboratorios()
 BEGIN
-	SELECT lab_id,lab_nombre,lab_tipoLaboratorio,edf_nombre,concat(emp_nombre,' ',emp_apellido) 
-	FROM laboratorio JOIN empleado ON (emp_cedula =lab_ayudante) JOIN edificio ON (lab_edf_id=edf_id);
+	SELECT * FROM vw_laboratorios;
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
@@ -366,6 +365,53 @@ BEGIN
 	SELECT DISTINCT lab_tipoLaboratorio FROM laboratorio;
 END ??
 DELIMITER ;
-
+-- *****************************************************************************************************
+-- Filtrar los laboratorios para la tabla
+DELIMITER ??
+ CREATE PROCEDURE filtrar_laboratorios(IN nombre VARCHAR (30),IN tipo VARCHAR(50),IN edificio VARCHAR (30))
+ BEGIN
+	IF nombre LIKE '' AND tipo LIKE '-' AND edificio LIKE '-'
+		THEN SELECT * FROM vw_laboratorios;
+	ELSEIF nombre LIKE '' AND tipo LIKE '-' -- nombre y grupo es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE edf_nombre LIKE edificio;
+    ELSEIF nombre LIKE '' AND edificio LIKE '-' -- nombre y estado es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo;
+    ELSEIF tipo LIKE '-' AND edificio LIKE '-' -- grupo y estado es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre;
+	ELSEIF nombre LIKE '' -- nombre es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo AND edf_nombre LIKE edificio;
+	ELSEIF tipo LIKE '-'-- grupo es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre AND edf_nombre LIKE edificio;
+    ELSEIF edificio LIKE '-'-- estado es indiferente
+		THEN SELECT * FROM vw_laboratorios WHERE lab_tipoLaboratorio LIKE tipo AND lab_nombre LIKE nombre ;
+	ELSE 
+		 SELECT * FROM vw_laboratorios WHERE lab_nombre LIKE nombre AND lab_tipoLaboratorio LIKE tipo AND edf_nombre LIKE edificio;
+    END IF;
+ END??
+ DELIMITER ;
+ -- *****************************************************************************************************
+-- Obtener todos los estudiantes para la tabla de crear grupos y añadir
+DELIMITER ??
+CREATE PROCEDURE llenar_estudiantes()
+BEGIN
+	SELECT * from vw_estudiante_tabla;
+END ??
+DELIMITER ;
+ -- *****************************************************************************************************
+-- Filtra los estudiantes
+DELIMITER ??
+ CREATE PROCEDURE filtrar_estudiantes(IN corr VARCHAR (30),IN program VARCHAR(50))
+ BEGIN
+	IF corr LIKE '' AND program LIKE '-'
+		THEN SELECT * FROM vw_estudiante_tabla;
+	ELSEIF corr LIKE '' 
+		THEN SELECT * FROM vw_estudiante_tabla WHERE prg_nombre LIKE program;
+	ELSEIF program LIKE '-' 
+		THEN SELECT * FROM vw_estudiante_tabla WHERE est_correo LIKE corr ;
+	ELSE 
+		SELECT * FROM vw_estudiante_tabla WHERE est_correo LIKE corr AND prg_nombre LIKE program ;
+    END IF;
+ END??
+ DELIMITER ;
 -- *****************************************************************************************************
 -- FIN DEL SCRIPT
