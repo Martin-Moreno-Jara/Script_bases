@@ -398,7 +398,7 @@ BEGIN
 END ??
 DELIMITER ;
  -- *****************************************************************************************************
--- Filtra los estudiantes
+-- Filtra los estudiantes 
 DELIMITER ??
  CREATE PROCEDURE filtrar_estudiantes(IN corr VARCHAR (30),IN program VARCHAR(50))
  BEGIN
@@ -407,9 +407,16 @@ DELIMITER ??
 	ELSEIF corr LIKE '' 
 		THEN SELECT * FROM vw_estudiante_tabla WHERE prg_nombre LIKE program;
 	ELSEIF program LIKE '-' 
-		THEN SELECT * FROM vw_estudiante_tabla WHERE est_correo LIKE corr ;
+		THEN 
+        SET @query = CONCAT('SELECT * FROM vw_estudiante_tabla WHERE est_correo LIKE "%', corr, '%"');
+		PREPARE stmt FROM @query;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
 	ELSE 
-		SELECT * FROM vw_estudiante_tabla WHERE est_correo LIKE corr AND prg_nombre LIKE program ;
+		SET @query = CONCAT('SELECT * FROM vw_estudiante_tabla WHERE prg_nombre LIKE \'', program, '\' AND est_correo LIKE "%', corr, '%"');
+		PREPARE stmt FROM @query;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
     END IF;
  END??
  DELIMITER ;
