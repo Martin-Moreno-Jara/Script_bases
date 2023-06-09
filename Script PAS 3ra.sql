@@ -241,6 +241,7 @@ DELIMITER ??
  DELIMITER ;
  -- *****************************************************************************************************
 -- Filtra los grupos de la tabla de grupos de investigación
+-- drop procedure filtrar_grupos;
 DELIMITER ??
  CREATE PROCEDURE filtrar_grupos(IN nombre VARCHAR (30),IN area VARCHAR(50))
  BEGIN
@@ -249,9 +250,16 @@ DELIMITER ??
 	ELSEIF nombre LIKE '' 
 		THEN SELECT * FROM vw_group_table WHERE gru_area LIKE area;
 	ELSEIF area LIKE '-' 
-		THEN SELECT * FROM vw_group_table WHERE gru_nombre LIKE nombre ;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM vw_group_table WHERE gru_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
 	ELSE 
-		SELECT * FROM vw_group_table WHERE gru_area LIKE area AND gru_nombre LIKE nombre ;
+			SET @query = CONCAT('SELECT * FROM vw_group_table WHERE gru_area LIKE \'', area, '\' AND gru_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     END IF;
  END??
  DELIMITER ;
@@ -265,6 +273,7 @@ END ??
 DELIMITER ;
 -- *****************************************************************************************************
 -- Filtrar los proyectos para la tabla
+-- DROP procedure filtrar_proyectos;
 DELIMITER ??
  CREATE PROCEDURE filtrar_proyectos(IN nombre VARCHAR (30),IN grupo VARCHAR(50),IN estado VARCHAR (30))
  BEGIN
@@ -275,15 +284,30 @@ DELIMITER ??
     ELSEIF nombre LIKE '' AND estado LIKE '-' -- nombre y estado es indiferente
 		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo;
     ELSEIF grupo LIKE '-' AND estado LIKE '-' -- grupo y estado es indiferente
-		THEN SELECT * FROM ver_proyectos WHERE pry_nombre LIKE nombre;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_proyectos WHERE pry_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
 	ELSEIF nombre LIKE '' -- nombre es indiferente
 		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_estado LIKE estado;
 	ELSEIF grupo LIKE '-'-- grupo es indiferente
-		THEN SELECT * FROM ver_proyectos WHERE pry_nombre LIKE nombre AND pry_estado LIKE estado;
+		THEN
+			SET @query = CONCAT('SELECT * FROM ver_proyectos WHERE pry_estado LIKE \'', estado, '\' AND pry_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     ELSEIF estado LIKE '-'-- estado es indiferente
-		THEN SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_nombre LIKE nombre ;
+		THEN 
+			SET @query = CONCAT('SELECT * FROM ver_proyectos WHERE gru_nombre LIKE \'', grupo, '\' AND pry_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
 	ELSE 
-		 SELECT * FROM ver_proyectos WHERE gru_nombre LIKE grupo AND pry_estado LIKE estado AND pry_nombre LIKE nombre;
+			SET @query = CONCAT('SELECT * FROM ver_proyectos WHERE gru_nombre LIKE \'', grupo, '\' AND pry_estado LIKE \'',estado,'\' AND pry_nombre LIKE "%', nombre, '%"');
+			PREPARE stmt FROM @query;
+			EXECUTE stmt;
+			DEALLOCATE PREPARE stmt;
     END IF;
  END??
  DELIMITER ;
