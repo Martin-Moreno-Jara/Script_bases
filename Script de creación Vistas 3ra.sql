@@ -95,4 +95,11 @@ from estudiante join programa_academico on (prg_id=est_prg_id);
 -- *****************************************************************************************************
  -- papers con los atributos para insertar
  CREATE VIEW vw_insert_pubi AS SELECT pap_id,pap_titulo,pap_numPaginas,pap_tema,pap_pry_id FROM paper;
+ -- *****************************************************************************************************
+ -- VISTA PARA LA INFO DEL GRUPO
+ CREATE VIEW perfil_grupo AS
+ SELECT gru_id, gru_nombre,gru_numIntegrantes,
+ gru_numPapers,gru_area, gru_numProyectos, 
+ CONCAT(pro_nombre,' ',pro_apellido) as Profesor_lider
+ FROM grupo_investigacion JOIN profesor  ON (grupo_investigacion.gru_lider=profesor.pro_cedula);
    -- *****************************************************************************************************

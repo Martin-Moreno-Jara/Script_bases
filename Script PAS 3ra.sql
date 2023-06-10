@@ -570,6 +570,19 @@ BEGIN
 	INSERT INTO vw_insert_pubi VALUES(id,title,pag,tema,pry);
 END ??
 DELIMITER ;
-select * from vw_insert_proyecto;
+-- *****************************************************************************************************
+DELIMITER ??
+CREATE PROCEDURE mostrar_perfil_grupo(IN id INT)
+ BEGIN
+	SELECT * FROM perfil_grupo WHERE gru_id=id;
+ END ??
+ DELIMITER ;
+-- *****************************************************************************************************
+ DELIMITER ??
+ CREATE PROCEDURE editar_nombre_grupo (IN id INT, IN nombre VARCHAR(75))
+ BEGIN
+	UPDATE perfil_grupo SET gru_nombre=nombre WHERE gru_id = id;
+END ??
+DELIMITER ;
 -- *****************************************************************************************************
 -- FIN DEL SCRIPT
