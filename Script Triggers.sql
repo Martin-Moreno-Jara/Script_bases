@@ -28,4 +28,56 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
+-- SCRIPS PARA UPDATES DE ESTUDIANTES, GRUPO INVESTIGACION, EMPLEADO Y PROFESOR
+ DELIMITER ??
+ CREATE TRIGGER actualizacion_estudiante 
+ BEFORE UPDATE ON estudiante
+ FOR EACH ROW 
+ BEGIN
+	IF (NEW.est_telefono='' OR NEW.est_telefono=NULL) AND (NEW.est_direccion='' OR NEW.est_direccion = NULL ) THEN
+		SET NEW.est_telefono = OLD.est_telefono, NEW.est_direccion = OLD.est_direccion;
+	ELSEIF NEW.est_telefono='' OR NEW.est_telefono=NULL THEN 
+		SET NEW.est_telefono = OLD.est_telefono;
+	ELSEIF NEW.est_direccion = '' OR NEW.est_direccion = NULL THEN
+		SET NEW.est_direccion = OLD.est_direccion;
+	END IF;
+	 
+ END ??
+ 
+ CREATE TRIGGER actualizacion_profesor 
+ BEFORE UPDATE ON profesor
+ FOR EACH ROW 
+ BEGIN
+	IF (NEW.pro_telefono='' OR NEW.pro_telefono=NULL) AND (NEW.pro_direccion='' OR NEW.pro_direccion = NULL ) THEN
+		SET NEW.pro_telefono = OLD.pro_telefono, NEW.pro_direccion = OLD.pro_direccion;
+	ELSEIF NEW.pro_telefono='' OR NEW.pro_telefono=NULL THEN 
+		SET NEW.pro_telefono = OLD.pro_telefono;
+	ELSEIF NEW.pro_direccion = '' OR NEW.pro_direccion = NULL THEN
+		SET NEW.pro_direccion = OLD.pro_direccion;
+	END IF;
+ END ??
+
+ CREATE TRIGGER actualizacion_empleado 
+ BEFORE UPDATE ON empleado
+ FOR EACH ROW 
+ BEGIN
+	IF (NEW.emp_telefono='' OR NEW.emp_telefono=NULL) AND (NEW.emp_direccion='' OR NEW.emp_direccion = NULL ) THEN
+		SET NEW.emp_telefono = OLD.emp_telefono, NEW.emp_direccion = OLD.emp_direccion;
+	ELSEIF NEW.emp_telefono='' OR NEW.emp_telefono=NULL THEN 
+		SET NEW.emp_telefono = OLD.emp_telefono;
+	ELSEIF NEW.emp_direccion = '' OR NEW.emp_direccion = NULL THEN
+		SET NEW.emp_direccion = OLD.emp_direccion;
+	END IF;
+ END ??
+ 
+ CREATE TRIGGER actualizacion_grupo_investigacion 
+ BEFORE UPDATE ON grupo_investigacion
+ FOR EACH ROW 
+ BEGIN
+	IF NEW.gru_nombre='' OR NEW.gru_nombre=NULL THEN
+		SET NEW.gru_nombre = OLD.gru_nombre;
+	END IF;
+ END ??
+ DELIMITER ;
+ 
 -- FIN DEL SCRIPT
