@@ -56,17 +56,17 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA PROFESOR
-	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_tipoProfesor, pro_tituloPregrado,pro_tituloPosgrado,pro_dep_id,pro_contrasena)
-    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',1,aes_encrypt('123','clave')),
-			(2,'Juan','Armando',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',1,aes_encrypt('123','clave')),
-	(3,'Felipe','Fonseca',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingeniería Quimica','Maestria en ingeniería Quimica',2,aes_encrypt('123','clave')),
-	(4,'Gabriel','Guerrero',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ciencias humanas','Maestria en ciencias humanas',9,aes_encrypt('123','clave')),
-	(5,'Luis','Suarez',28,'luis@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',8,aes_encrypt('123','clave')),
-	(6,'Gustavo','Gattuso',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',4,aes_encrypt('123','clave')),
-	(7,'Martin','Moreno',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',4,aes_encrypt('123','clave')),
-	(8,'Enrique','Peña',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingenieria Mecanica','Maestria en ingeniería mecanica',5,aes_encrypt('123','clave')),
-	(9,'Sandra','Sierra',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina','Maestria en Medicina',14,aes_encrypt('123','clave')),
-	(10,'Mariana','Mendez',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina Veterinaria','Maestria en Medicina Veterinaria',10,aes_encrypt('123','clave'));
+	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_tipoProfesor,pro_dep_id,pro_contrasena)
+    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','Planta',1,aes_encrypt('123','clave')),
+			(2,'Juan','Armando',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','Planta',1,aes_encrypt('123','clave')),
+	(3,'Felipe','Fonseca',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','Catedra',2,aes_encrypt('123','clave')),
+	(4,'Gabriel','Guerrero',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','Planta',9,aes_encrypt('123','clave')),
+	(5,'Luis','Suarez',28,'luis@unal.edu.co','12312445','Cra 93b # 56a','Planta',8,aes_encrypt('123','clave')),
+	(6,'Gustavo','Gattuso',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','Planta',4,aes_encrypt('123','clave')),
+	(7,'Martin','Moreno',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','Planta',4,aes_encrypt('123','clave')),
+	(8,'Enrique','Peña',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','Catedra',5,aes_encrypt('123','clave')),
+	(9,'Sandra','Sierra',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','Planta',14,aes_encrypt('123','clave')),
+	(10,'Mariana','Mendez',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','Planta',10,aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EMPLEADO
 	INSERT INTO empleado (emp_cedula,emp_nombre,emp_apellido,emp_edad,emp_correo,emp_telefono,emp_direccion,emp_tipoEmpleado,emp_cargo,emp_contrasena)

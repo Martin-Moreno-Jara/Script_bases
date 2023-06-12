@@ -28,13 +28,16 @@ CREATE VIEW vw_proyecto_grupo AS
  CREATE VIEW vw_grupo_estudiante AS SELECT * FROM grupo_investigacion JOIN estudiante ON (gru_id=est_gru_id);
  -- *****************************************************************************************************
 -- VISTA CON JOIN DE ESTUDIANTE, GRUPO DE INVESTIGACIÓN, PROGRAMA ACADÉMICO Y SEMILLERO 
- CREATE VIEW perfil AS 
+-- drop view perfil;
+CREATE VIEW perfil AS 
 SELECT est_nombre, est_apellido, est_edad, est_correo, est_telefono, est_direccion, est_cedula, 
 programa_academico.prg_nombre, grupo_investigacion.gru_nombre, semillero.sem_nombre 
-FROM semillero JOIN (grupo_investigacion JOIN (estudiante JOIN programa_academico 
+FROM semillero RIGHT JOIN (grupo_investigacion RIGHT JOIN (estudiante JOIN programa_academico 
 ON (estudiante.est_prg_id=programa_academico.prg_id)) 
 ON (grupo_investigacion.gru_id= estudiante.est_gru_id)) 
 ON (semillero.sem_id=estudiante.est_sem_id);
+
+
 
 -- *****************************************************************************************************
 -- VISTA CON JOIN DE PROYECTO Y GRUPO DE INVESTIGACIÓN
@@ -102,4 +105,16 @@ from estudiante join programa_academico on (prg_id=est_prg_id);
  gru_numPapers,gru_area, gru_numProyectos, 
  CONCAT(pro_nombre,' ',pro_apellido) as Profesor_lider
  FROM grupo_investigacion JOIN profesor  ON (grupo_investigacion.gru_lider=profesor.pro_cedula);
+-- *****************************************************************************************************
+  /*select pap_titulo,pap_tema,pap_numPaginas,pry_nombre,gru_nombre 
+  FROM paper JOIN proyecto ON (pry_id=pap_pry_id) JOIN grupo_investigacion ON (gru_id=pry_gru_id);
+  */
+  
+  CREATE VIEW vw_paper_editorial_bib AS SELECT pap_titulo,edi_nombre,bib_nombre FROM publicacion 
+  JOIN paper on (pap_id=pub_pap_id) JOIN editorial on (pub_edi_id=edi_id)
+  JOIN existencia on (exi_pub_pap_id=pap_id) JOIN biblioteca ON (bib_id=exi_bib_id); 
+  
+-- *****************************************************************************************************
+CREATE VIEW vw_depNombres AS
+select dep_nombre from departamento;
    -- *****************************************************************************************************

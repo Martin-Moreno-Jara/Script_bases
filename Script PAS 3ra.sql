@@ -75,6 +75,15 @@ END ??
 DELIMITER ;
 
 -- call login_empleado('felipeg@unal.edu.co','123');
+-- *****************************************************************************************************
+DELIMITER ??
+CREATE PROCEDURE getNum_prg(IN programa VARCHAR(50))
+BEGIN
+	SELECT prg_id from programa_academico WHERE prg_nombre LIKE programa;
+END ??
+DELIMITER ;
+
+call getNum_prg('Derecho');
 
 -- *****************************************************************************************************
 -- CREAR UN USUARIO DE TIPO ESTUDIANTE E INSERTARLO EN LA TABLA 
@@ -82,10 +91,12 @@ DELIMITER ;
 DELIMITER ??
 CREATE PROCEDURE estudiante_register
 (IN cedula INT,IN nombre VARCHAR(50),IN apellido VARCHAR(50),IN edad int,IN correo VARCHAR(50),
-IN telefono VARCHAR(50),IN direccion VARCHAR(50),IN tipo VARCHAR(50),IN programa VARCHAR(50),pass VARCHAR(50))
+IN telefono VARCHAR(50),IN direccion VARCHAR(50),IN tipo VARCHAR(50),IN programa INT,pass VARCHAR(50))
 BEGIN
-	INSERT INTO estudiante(est_cedula,est_nombre,est_apellido,est_edad,est_correo,est_telefono,est_direccion,est_fechaVinculacion,est_tipoEstudiante,est_prg_id)
-    VALUES (cedula,nombre,apellido,edad,correo,telefono,direccion,tipo,1);
+	INSERT INTO estudiante(est_cedula,est_nombre,est_apellido,est_edad,est_correo,
+				est_telefono,est_direccion,est_tipoEstudiante,est_prg_id,est_contrasena)
+    VALUES (cedula,nombre,apellido,edad,correo,telefono,direccion,tipo,programa,aes_encrypt(pass,'clave'));
+    
     SET @createUserQuery = CONCAT('CREATE USER \'', correo, '\'@\'localhost\' IDENTIFIED BY \'', pass, '\';');
         PREPARE createUserStmt FROM @createUserQuery;
         EXECUTE createUserStmt;
@@ -582,6 +593,21 @@ CREATE PROCEDURE mostrar_perfil_grupo(IN id INT)
  CREATE PROCEDURE editar_nombre_grupo (IN id INT, IN nombre VARCHAR(75))
  BEGIN
 	UPDATE perfil_grupo SET gru_nombre=nombre WHERE gru_id = id;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- Editar perfil del estudiante
+DELIMITER ??
+CREATE PROCEDURE editar_estudiante_perfil(IN ced INT, IN tel VARCHAR(75), IN direc VARCHAR(75))
+BEGIN
+	UPDATE perfil SET est_telefono=tel, est_direccion=direc WHERE est_cedula=ced; 
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+DELIMITER ??
+CREATE PROCEDURE get_departamentos()
+BEGIN
+	SELECT * from vw_depNombres;
 END ??
 DELIMITER ;
 -- *****************************************************************************************************

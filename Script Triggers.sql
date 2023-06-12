@@ -28,4 +28,112 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
+-- SCRIPS PARA UPDATES DE ESTUDIANTES, GRUPO INVESTIGACION, EMPLEADO Y PROFESOR
+ DELIMITER ??
+ CREATE TRIGGER actualizacion_estudiante 
+ BEFORE UPDATE ON estudiante
+ FOR EACH ROW 
+ BEGIN
+	IF (NEW.est_telefono='' OR NEW.est_telefono=NULL) AND (NEW.est_direccion='' OR NEW.est_direccion = NULL ) THEN
+		SET NEW.est_telefono = OLD.est_telefono, NEW.est_direccion = OLD.est_direccion;
+	ELSEIF NEW.est_telefono='' OR NEW.est_telefono=NULL THEN 
+		SET NEW.est_telefono = OLD.est_telefono;
+	ELSEIF NEW.est_direccion = '' OR NEW.est_direccion = NULL THEN
+		SET NEW.est_direccion = OLD.est_direccion;
+	END IF;
+
+ END ??
+-- *****************************************************************************************************
+ CREATE TRIGGER actualizacion_profesor 
+ BEFORE UPDATE ON profesor
+ FOR EACH ROW 
+ BEGIN
+	IF (NEW.pro_telefono='' OR NEW.pro_telefono=NULL) AND (NEW.pro_direccion='' OR NEW.pro_direccion = NULL ) THEN
+		SET NEW.pro_telefono = OLD.pro_telefono, NEW.pro_direccion = OLD.pro_direccion;
+	ELSEIF NEW.pro_telefono='' OR NEW.pro_telefono=NULL THEN 
+		SET NEW.pro_telefono = OLD.pro_telefono;
+	ELSEIF NEW.pro_direccion = '' OR NEW.pro_direccion = NULL THEN
+		SET NEW.pro_direccion = OLD.pro_direccion;
+	END IF;
+ END ??
+-- *****************************************************************************************************
+ CREATE TRIGGER actualizacion_empleado 
+ BEFORE UPDATE ON empleado
+ FOR EACH ROW 
+ BEGIN
+	IF (NEW.emp_telefono='' OR NEW.emp_telefono=NULL) AND (NEW.emp_direccion='' OR NEW.emp_direccion = NULL ) THEN
+		SET NEW.emp_telefono = OLD.emp_telefono, NEW.emp_direccion = OLD.emp_direccion;
+	ELSEIF NEW.emp_telefono='' OR NEW.emp_telefono=NULL THEN 
+		SET NEW.emp_telefono = OLD.emp_telefono;
+	ELSEIF NEW.emp_direccion = '' OR NEW.emp_direccion = NULL THEN
+		SET NEW.emp_direccion = OLD.emp_direccion;
+	END IF;
+ END ??
+-- *****************************************************************************************************
+ CREATE TRIGGER actualizacion_grupo_investigacion 
+ BEFORE UPDATE ON grupo_investigacion
+ FOR EACH ROW 
+ BEGIN
+	IF NEW.gru_nombre='' OR NEW.gru_nombre=NULL THEN
+		SET NEW.gru_nombre = OLD.gru_nombre;
+	END IF;
+ END ??
+ DELIMITER ;
+-- *****************************************************************************************************
+-- NO REPETICIÓN DE CORREOS PARA ESTUDIANTES O PROFESORES
+DELIMITER ??
+	CREATE TRIGGER estudiante_correo BEFORE INSERT ON estudiante
+    FOR EACH ROW
+    BEGIN
+		DECLARE numCor INT;
+        DECLARE mgs VARCHAR(250);
+        SELECT count(*) INTO numCor FROM estudiante WHERE est_correo=NEW.est_correo;
+        IF numCor>0 THEN 
+			SET mgs = concat('No se admiten correos duplicados ',NEW.est_correo);
+            SIGNAL sqlstate '45000' SET message_text=mgs;
+        END IF;
+        IF NEW.est_correo NOT LIKE '%@unal.edu.co' THEN
+			SET mgs = concat('Formato erróneo de correo ',NEW.est_correo);
+            SIGNAL sqlstate '45000' SET message_text=mgs;
+        END IF;
+    END ??
+DELIMITER ;
+-- *****************************************************************************************************
+DELIMITER ??
+	CREATE TRIGGER profesor_correo BEFORE INSERT ON profesor
+    FOR EACH ROW
+    BEGIN
+		DECLARE numCor INT;
+        DECLARE mgs VARCHAR(250);
+        SELECT count(*) INTO numCor FROM profesor WHERE pro_correo=NEW.pro_correo;
+        IF numCor>0 THEN 
+			SET mgs = concat('No se admiten correos duplicados ',NEW.pro_correo);
+            SIGNAL sqlstate '45000' SET message_text=mgs;
+        END IF;
+        IF NEW.pro_correo NOT LIKE '%@unal.edu.co' THEN
+			SET mgs = concat('Formato erróneo de correo ',NEW.pro_correo);
+            SIGNAL sqlstate '45000' SET message_text=mgs;
+        END IF;
+    END ??
+DELIMITER ;
+-- *****************************************************************************************************
+-- NO NOMBRES DUPLICADOS PARA GRUPOS DE INVESTIGACION
+DELIMITER ??
+CREATE TRIGGER grupo_nom_id BEFORE INSERT ON grupo_investigacion
+FOR EACH ROW
+BEGIN
+	DECLARE numNom INT;
+	DECLARE mgs VARCHAR(250);
+    SELECT count(*) INTO numNom FROM grupo_investigacion WHERE gru_nombre LIKE new.gru_nombre;
+    IF numNom>0 THEN 
+		SET mgs = concat('No se admiten nombres duplicados ',NEW.gru_nombre);
+            SIGNAL sqlstate '45000' SET message_text=mgs;
+	END IF;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+
+
 -- FIN DEL SCRIPT
+
+-- INSERT INTO estudiante VALUES (150,'S','R',45,'josego@unal.edu.co','12343434','ASFASFA','Pregrado',1,1,1,aes_encrypt('123','clave'));

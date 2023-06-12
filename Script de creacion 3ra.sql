@@ -155,8 +155,6 @@ CREATE TABLE profesor(
     pro_telefono VARCHAR(45),
     pro_direccion VARCHAR(45),
 	pro_tipoProfesor VARCHAR(45) NOT NULL,
-    pro_tituloPregrado VARCHAR(45) NOT NULL,
-    pro_tituloPosgrado VARCHAR(45),
     pro_gru_id INT DEFAULT NULL,
     pro_sem_id INT DEFAULT NULL,
     pro_contrasena BLOB DEFAULT NULL,
