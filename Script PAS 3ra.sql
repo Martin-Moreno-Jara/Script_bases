@@ -83,7 +83,6 @@ BEGIN
 END ??
 DELIMITER ;
 
-call getNum_prg('Derecho');
 
 -- *****************************************************************************************************
 -- CREAR UN USUARIO DE TIPO ESTUDIANTE E INSERTARLO EN LA TABLA 
@@ -107,6 +106,33 @@ BEGIN
         EXECUTE grantRoleStmt;
         DEALLOCATE PREPARE grantRoleStmt;
     SET @sql = CONCAT('ALTER USER ''', correo, '''@''localhost'' DEFAULT ROLE role_estudiante;');
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+END??
+DELIMITER ;
+-- *****************************************************************************************************
+-- CREAR UN USUARIO DE TIPO PROFESOR E INSERTARLO EN LA TABLA 
+-- drop procedure profesor_register;
+DELIMITER ??
+CREATE PROCEDURE profesor_register
+(IN cedula INT,IN nombre VARCHAR(50),IN apellido VARCHAR(50),IN edad int,IN correo VARCHAR(50),
+IN telefono VARCHAR(50),IN direccion VARCHAR(50),IN tipo VARCHAR(50),IN departamento INT,pass VARCHAR(50))
+BEGIN
+	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,
+				pro_telefono,pro_direccion,pro_tipoProfesor,pro_dep_id,pro_contrasena)
+    VALUES (cedula,nombre,apellido,edad,correo,telefono,direccion,tipo,departamento,aes_encrypt(pass,'clave'));
+    
+    SET @createUserQuery = CONCAT('CREATE USER \'', correo, '\'@\'localhost\' IDENTIFIED BY \'', pass, '\';');
+        PREPARE createUserStmt FROM @createUserQuery;
+        EXECUTE createUserStmt;
+        DEALLOCATE PREPARE createUserStmt;
+	-- ALTER USER correo@'localhost'  default role role_estudiante;
+    SET @grantRoleQuery = CONCAT('GRANT role_profesor TO \'', correo, '\'@\'localhost\';');
+        PREPARE grantRoleStmt FROM @grantRoleQuery;
+        EXECUTE grantRoleStmt;
+        DEALLOCATE PREPARE grantRoleStmt;
+    SET @sql = CONCAT('ALTER USER ''', correo, '''@''localhost'' DEFAULT ROLE role_profesor;');
         PREPARE stmt FROM @sql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt;
@@ -538,11 +564,11 @@ END ??
 DELIMITER ;
 
 -- *****************************************************************************************************
--- Editar perfil del profesor
+-- Editar perfil del profesor drop PROCEDURE editar_profesor_perfil;
 DELIMITER ??
 CREATE PROCEDURE editar_profesor_perfil(IN ced INT, IN tel VARCHAR(75), IN direc VARCHAR(75))
 BEGIN
-	UPDATE perfil_profesor SET pro_telefono=tel, pro_direccion=direc WHERE pro_cedula=ced; 
+	UPDATE profesor SET pro_telefono=tel, pro_direccion=direc WHERE pro_cedula=ced; 
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
@@ -596,11 +622,11 @@ CREATE PROCEDURE mostrar_perfil_grupo(IN id INT)
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
--- Editar perfil del estudiante
+-- Editar perfil del estudiante drop PROCEDURE editar_estudiante_perfil;
 DELIMITER ??
 CREATE PROCEDURE editar_estudiante_perfil(IN ced INT, IN tel VARCHAR(75), IN direc VARCHAR(75))
 BEGIN
-	UPDATE perfil SET est_telefono=tel, est_direccion=direc WHERE est_cedula=ced; 
+	UPDATE estudiante SET est_telefono=tel, est_direccion=direc WHERE est_cedula=ced; 
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
@@ -610,5 +636,74 @@ BEGIN
 	SELECT * from vw_depNombres;
 END ??
 DELIMITER ;
+-- *****************************************************************************************************
+DELIMITER ??
+CREATE PROCEDURE getNum_dep(IN dep VARCHAR(50))
+BEGIN
+	select dep_id from departamento WHERE dep_nombre LIKE dep;
+END ??
+DELIMITER ;
+-- *****************************************************************************************************
+DELIMITER ??
+CREATE PROCEDURE actualizar_grupo_estudiante (IN estudiante_id INT,IN nuevo_grupo INT)
+BEGIN
+    UPDATE estudiante
+    SET est_gru_id = nuevo_grupo
+    WHERE est_cedula = estudiante_id;
+END ??
+DELIMITER ;
+call actualizar_grupo_estudiante (1,2);
+select * from estudiante;
+-- *****************************************************************************************************
+DELIMITER $$
+CREATE PROCEDURE actualizarNombreProyecto(
+    IN nombreantiguo VARCHAR(45),
+    IN nombrenuevo VARCHAR(45)
+)
+BEGIN
+    UPDATE proyecto
+    SET pry_nombre = nombrenuevo
+    WHERE pry_nombre = nombreantiguo;
+END$$
+DELIMITER ;
+
+-- *****************************************************************************************************
+DELIMITER $$
+CREATE PROCEDURE eliminarProyecto(IN nombre VARCHAR(45))
+BEGIN
+    DELETE FROM proyecto
+    WHERE pry_nombre = nombre;
+END$$
+DELIMITER ;
+-- *****************************************************************************************************DROP PROCEDURE mostrar_estudiantes_singrupo;
+DELIMITER ??
+CREATE PROCEDURE mostrar_estudiantes_singrupo()
+BEGIN
+	SELECT concat(est_nombre,' ',est_apellido),est_correo,prg_nombre FROM perfil WHERE gru_nombre is NULL;
+END ??
+DELIMITER ;
+call mostrar_estudiantes_singrupo();
+-- *****************************************************************************************************drop PROCEDURE actualizarPaper;
+DELIMITER $$
+CREATE PROCEDURE actualizarPaper(IN pap VARCHAR(100),IN titulo VARCHAR(45),IN tema VARCHAR(45))
+BEGIN
+	IF titulo like '' and tema like '' THEN
+    BEGIN
+    END;
+	ELSEIF titulo LIKE '' THEN
+        UPDATE paper SET pap_tema = tema WHERE pap_titulo like pap;
+    ELSEIF tema LIKE '' THEN
+        UPDATE paper SET pap_titulo = titulo WHERE pap_titulo like pap;
+    ELSE
+        UPDATE paper SET pap_titulo = titulo, pap_tema = tema WHERE pap_titulo like pap;
+    END IF;
+END$$
+DELIMITER ;
+call actualizarPaper('fuvolsito ','','');
+select * from paper;
+-- *****************************************************************************************************
+DELIMITER ??
+DELIMITER ;
+SELECT pap_id FROM paper WHERE pap_titulo LIKE 'Sociedad y nosotros';
 -- *****************************************************************************************************
 -- FIN DEL SCRIPT

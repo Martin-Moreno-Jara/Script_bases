@@ -51,8 +51,10 @@ ON (semillero.sem_id=estudiante.est_sem_id);
 CREATE VIEW perfil_profesor AS
 SELECT pro_nombre, pro_apellido, pro_edad, pro_correo, 
 pro_telefono, pro_direccion,pro_tipoProfesor,pro_cedula,gru_nombre,sem_nombre,dep_nombre
-FROM profesor JOIN grupo_investigacion on (pro_gru_id=gru_id) JOIN semillero ON (sem_id=pro_sem_id)
+FROM profesor  left JOIN grupo_investigacion on (pro_gru_id=gru_id) left JOIN semillero ON (sem_id=pro_sem_id)
 JOIN departamento ON (dep_id=pro_dep_id);
+
+
 
 
 

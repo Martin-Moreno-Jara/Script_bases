@@ -16,7 +16,7 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 -- INSERCIÓN DE DATOS EN LA TABLA DEPARTAMENTO
  INSERT INTO departamento(dep_id,dep_nombre,dep_fac_id)
     VALUES 	(1,'Civil y agrícola',1),(2,'Sistema e industrial',1),(3,'Eléctrica y Electrónica',1),
-            (4,'Mecánica y mecatrónica',1),(5,'Quimica y ambiental',1),(6,'Civil y agrícola',1),
+            (4,'Mecánica y mecatrónica',1),(5,'Quimica y ambiental',1),(6,'Agronómica',1),
             (7,'Derecho',2),(8,'Ciencia política',2),(9,'Antropología',3),
             (10,'Psicología',3),(11,'Filosofía',3),(12,'Salud pública',4),
             (13,'Escuela de educación médica',4),(14,'Arquitectura',6),(15,'Música',6),
