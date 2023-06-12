@@ -1,8 +1,11 @@
 Use investigacion;
+-- ####################################################################################################
 -- SCRIPT DE CREACIÓN DE PROCEDIMIENTOS ALMACENADOS
+-- ####################################################################################################
+
+
 -- *****************************************************************************************************
 -- LOGIN PARA ESTUDIANTE
--- drop procedure login_estudiante;
 DELIMITER ??
 CREATE PROCEDURE login_estudiante(IN corr VARCHAR(50),IN contra VARCHAR(50) )
 BEGIN
@@ -19,7 +22,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
--- LOGIN PARA PROFESOR drop procedure login_profesor;
+-- LOGIN PARA PROFESOR 
 DELIMITER ??
 CREATE PROCEDURE login_profesor(IN corr VARCHAR(50),IN contra VARCHAR(50) )
 BEGIN
@@ -35,9 +38,8 @@ BEGIN
     END IF ;
 END ??
 DELIMITER ;
--- call login_profesor('felipeg@unal.edu.co','123');
 -- *****************************************************************************************************
--- LOGIN PARA EMPLEADO  drop procedure login_empleado;
+-- LOGIN PARA EMPLEADO 
 DELIMITER ??
 CREATE PROCEDURE login_empleado(IN corr VARCHAR(50),IN contra VARCHAR(50) )
 BEGIN
@@ -53,11 +55,8 @@ BEGIN
     END IF ;
 END ??
 DELIMITER ;
-
--- call login_empleado('felipeg@unal.edu.co','123');
-
--- LOGIN PARA GRUPOS  drop procedure login_empleado;
--- DROP procedure login_grupo;
+-- *****************************************************************************************************
+-- LOGIN PARA GRUPO DE INVESTIGACIÓN 
 DELIMITER ??
 CREATE PROCEDURE login_grupo(IN nombre VARCHAR(50),IN contra VARCHAR(50) )
 BEGIN
@@ -73,20 +72,16 @@ BEGIN
     END IF ;
 END ??
 DELIMITER ;
-
--- call login_empleado('felipeg@unal.edu.co','123');
 -- *****************************************************************************************************
+-- OBTENER DEL ID DEL PROGRAMA SEGÚN SU NOMBRE
 DELIMITER ??
 CREATE PROCEDURE getNum_prg(IN programa VARCHAR(50))
 BEGIN
 	SELECT prg_id from programa_academico WHERE prg_nombre LIKE programa;
 END ??
 DELIMITER ;
-
-
 -- *****************************************************************************************************
--- CREAR UN USUARIO DE TIPO ESTUDIANTE E INSERTARLO EN LA TABLA 
--- drop procedure estudiante_register;
+-- CREAR UN USUARIO TIPO ESTUDIANTE DESDE EL REGISTER
 DELIMITER ??
 CREATE PROCEDURE estudiante_register
 (IN cedula INT,IN nombre VARCHAR(50),IN apellido VARCHAR(50),IN edad int,IN correo VARCHAR(50),
@@ -112,8 +107,7 @@ BEGIN
 END??
 DELIMITER ;
 -- *****************************************************************************************************
--- CREAR UN USUARIO DE TIPO PROFESOR E INSERTARLO EN LA TABLA 
--- drop procedure profesor_register;
+-- CREAR UN USUARIO DE TIPO PROFESOR DESDE EL REGISTER
 DELIMITER ??
 CREATE PROCEDURE profesor_register
 (IN cedula INT,IN nombre VARCHAR(50),IN apellido VARCHAR(50),IN edad int,IN correo VARCHAR(50),
@@ -139,8 +133,7 @@ BEGIN
 END??
 DELIMITER ;
 -- *****************************************************************************************************
--- MOSTRAR TODOS LOS PROGRAMAS ACADÉMICOS
--- drop procedure get_programas_academicos;
+-- MOSTRAR TODOS LOS PROGRAMAS ACADÉMICOS PARA LLENAR COMBOBOX
 DELIMITER ??
 CREATE PROCEDURE get_programas_academicos()
 BEGIN 
@@ -148,7 +141,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
--- MOSTRAR TODAS LAS FACULTADES
+-- MOSTRAR TODAS LAS FACULTADES 
 DELIMITER ??
 CREATE PROCEDURE get_facultades()
 BEGIN 
@@ -156,7 +149,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
--- MOSTRAR TODAS LAS ÁREAS DE LOS GRUPOS DE INVESTIGACIÓN
+-- MOSTRAR TODAS LAS ÁREAS DE LOS GRUPOS DE INVESTIGACIÓN PARA COMBOBOX
 DELIMITER ??
 CREATE PROCEDURE get_grupos_areas()
 BEGIN 
@@ -165,7 +158,6 @@ END ??
 DELIMITER ;
 -- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA LA TABLA DE LOS GRUPOS DE INVESTIGACIÓN.
--- drop procedure llenar_tabla_grupos;
 DELIMITER ??
 CREATE PROCEDURE llenar_tabla_grupos()
 BEGIN 
@@ -190,7 +182,6 @@ END??
 DELIMITER ;
 -- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA LA TABLA DE LABORATORIOS
--- drop procedure llenar_tabla_laboratorios;
 DELIMITER ??
 CREATE PROCEDURE llenar_tabla_laboratorios()
 BEGIN
@@ -278,8 +269,7 @@ DELIMITER ??
  END??
  DELIMITER ;
  -- *****************************************************************************************************
--- Filtra los grupos de la tabla de grupos de investigación
--- drop procedure filtrar_grupos;
+-- FILTRAR LA TABLA DE GRUPOS DE INVESTIGACIÓN
 DELIMITER ??
  CREATE PROCEDURE filtrar_grupos(IN nombre VARCHAR (30),IN area VARCHAR(50))
  BEGIN
@@ -302,7 +292,7 @@ DELIMITER ??
  END??
  DELIMITER ;
 -- *****************************************************************************************************
--- Obtener todos los grupos para el combobox
+-- OBTENER NOMBRE DE LOS GRUPOS PARA COMBOBOX
 DELIMITER ??
 CREATE PROCEDURE get_grupos()
 BEGIN
@@ -310,8 +300,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
--- Filtrar los proyectos para la tabla
--- DROP procedure filtrar_proyectos;
+-- FILTRAR TABLA DE PROYECTOS
 DELIMITER ??
  CREATE PROCEDURE filtrar_proyectos(IN nombre VARCHAR (30),IN grupo VARCHAR(50),IN estado VARCHAR (30))
  BEGIN
@@ -350,7 +339,7 @@ DELIMITER ??
  END??
  DELIMITER ;
  -- *****************************************************************************************************
--- Obtener todos los temas para el combobox
+-- OBTENER TODOS LOS TEMAS PARA EL COMBOBOX
 DELIMITER ??
 CREATE PROCEDURE get_temas()
 BEGIN
@@ -366,8 +355,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
--- Filtrar las publicaciones para la tabla 
--- drop procedure filtrar_publicaciones;
+-- FILTRAR TABLA PUBLICACIONES
 DELIMITER ??
  CREATE PROCEDURE filtrar_publicaciones(IN titulo VARCHAR (30),IN tema VARCHAR(50),IN grupo VARCHAR (30),IN proyecto VARCHAR (30))
  BEGIN
@@ -437,7 +425,6 @@ DELIMITER ??
     END IF;
  END??
  DELIMITER ;
- call filtrar_publicaciones('sa','-','-','-');
  -- *****************************************************************************************************
 -- Obtener todos los edificios para el combobox
 DELIMITER ??
@@ -455,8 +442,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
--- Filtrar los laboratorios para la tabla
--- drop procedure filtrar_laboratorios;
+-- FILTRAR LA TABLA DE LABORATORIOS
 DELIMITER ??
  CREATE PROCEDURE filtrar_laboratorios(IN nombre VARCHAR (30),IN tipo VARCHAR(50),IN edificio VARCHAR (30))
  BEGIN
@@ -494,7 +480,6 @@ DELIMITER ??
     END IF;
  END??
  DELIMITER ;
- call filtrar_laboratorios('a','Quimica','-');
  -- *****************************************************************************************************
 -- Obtener todos los estudiantes para la tabla de crear grupos y añadir
 DELIMITER ??
@@ -504,7 +489,7 @@ BEGIN
 END ??
 DELIMITER ;
  -- *****************************************************************************************************
--- Filtra los estudiantes 
+-- FILTRAR LA TABLA DE ESTUDIANTES
 DELIMITER ??
  CREATE PROCEDURE filtrar_estudiantes(IN corr VARCHAR (30),IN program VARCHAR(50))
  BEGIN
@@ -528,14 +513,12 @@ DELIMITER ??
  DELIMITER ;
 -- *****************************************************************************************************
 -- Muestra los proyectos pero solo de un grupo en especifico
--- drop procedure get_proyectos_un_grupo;
 DELIMITER ??
 CREATE PROCEDURE get_proyectos_un_grupo(IN id INT)
 BEGIN
 	SELECT * FROM ver_proyectos_grupo  WHERE gru_id=id;
 END ??
 DELIMITER ; 
--- call get_proyectos_un_grupo(2);
 -- *****************************************************************************************************
 -- Muestra las publicaciones pero solo de un grupo en especifico
 DELIMITER ??
@@ -544,10 +527,8 @@ BEGIN
 	SELECT * FROM ver_publicaciones_grupo  WHERE gru_id=id;
 END ??
 DELIMITER ; 
--- call get_publicaciones_un_grupo(4);
 -- *****************************************************************************************************
 -- Muestra los proyectos pero solo de un grupo en especifico
--- drop procedure get_proyectos_un_grupoCombobox;
 DELIMITER ??
 CREATE PROCEDURE get_proyectos_un_grupoCombobox(IN id INT)
 BEGIN
@@ -562,7 +543,6 @@ BEGIN
 	SELECT * FROM perfil_profesor WHERE pro_cedula=cedula;
 END ??
 DELIMITER ;
-
 -- *****************************************************************************************************
 -- Editar perfil del profesor drop PROCEDURE editar_profesor_perfil;
 DELIMITER ??
@@ -589,7 +569,6 @@ BEGIN
 	INSERT INTO vw_insert_proyecto VALUES(id,nom,prop,estado,gru);
 END ??
 DELIMITER ;
-select * from vw_insert_proyecto;
 -- *****************************************************************************************************
 -- OBTENER EL NUM DE PROYECTO SEGUN EL NOMBRE
 DELIMITER ??
@@ -608,6 +587,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
+-- MUESTRA PERFIL O INFORMACIÓN DEL GRUPO DE INVESTIGACIÓN
 DELIMITER ??
 CREATE PROCEDURE mostrar_perfil_grupo(IN id INT)
  BEGIN
@@ -615,21 +595,29 @@ CREATE PROCEDURE mostrar_perfil_grupo(IN id INT)
  END ??
  DELIMITER ;
 -- *****************************************************************************************************
+-- EDITAR EL NOMBRE DEL GRUPO
  DELIMITER ??
  CREATE PROCEDURE editar_nombre_grupo (IN id INT, IN nombre VARCHAR(75))
  BEGIN
 	UPDATE perfil_grupo SET gru_nombre=nombre WHERE gru_id = id;
 END ??
 DELIMITER ;
--- *****************************************************************************************************
--- Editar perfil del estudiante drop PROCEDURE editar_estudiante_perfil;
+-- ***************************************************************************************************** 
+-- EDITAR TELEFONO Y DIRECCIÓN DE UN ESTUDIANTE
 DELIMITER ??
 CREATE PROCEDURE editar_estudiante_perfil(IN ced INT, IN tel VARCHAR(75), IN direc VARCHAR(75))
 BEGIN
-	UPDATE estudiante SET est_telefono=tel, est_direccion=direc WHERE est_cedula=ced; 
+	START TRANSACTION;
+		UPDATE estudiante SET est_telefono=tel, est_direccion=direc WHERE est_cedula=ced; 
+    IF length(tel)<10
+		THEN ROLLBACK;
+	ELSE 
+		COMMIT;
+	END IF;
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
+-- OBTENER TODOS LOS DEPARTAMENTOS PARA COMBOBOX
 DELIMITER ??
 CREATE PROCEDURE get_departamentos()
 BEGIN
@@ -637,6 +625,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
+-- OBTENER EL NÚMERO DE DEPARTAMENTO SEGÚN SU NOMBRE
 DELIMITER ??
 CREATE PROCEDURE getNum_dep(IN dep VARCHAR(50))
 BEGIN
@@ -644,6 +633,7 @@ BEGIN
 END ??
 DELIMITER ;
 -- *****************************************************************************************************
+-- CAMBIAR EL GRUPOD DE UN ESTUDIANTE
 DELIMITER ??
 CREATE PROCEDURE actualizar_grupo_estudiante (IN estudiante_id INT,IN nuevo_grupo INT)
 BEGIN
@@ -652,9 +642,8 @@ BEGIN
     WHERE est_cedula = estudiante_id;
 END ??
 DELIMITER ;
-call actualizar_grupo_estudiante (1,2);
-select * from estudiante;
 -- *****************************************************************************************************
+-- ACTUALIZAR EL NOMBRE DE UN PROYECTO
 DELIMITER $$
 CREATE PROCEDURE actualizarNombreProyecto(
     IN nombreantiguo VARCHAR(45),
@@ -668,6 +657,7 @@ END$$
 DELIMITER ;
 
 -- *****************************************************************************************************
+-- ELIMINAR UN PROYECTO
 DELIMITER $$
 CREATE PROCEDURE eliminarProyecto(IN nombre VARCHAR(45))
 BEGIN
@@ -675,7 +665,8 @@ BEGIN
     WHERE pry_nombre = nombre;
 END$$
 DELIMITER ;
--- *****************************************************************************************************DROP PROCEDURE mostrar_estudiantes_singrupo;
+-- *****************************************************************************************************
+-- MOSTRAR LOS ESTUDIANTES QUE NO TIENEN GRUPO
 DELIMITER ??
 CREATE PROCEDURE mostrar_estudiantes_singrupo()
 BEGIN
@@ -683,7 +674,8 @@ BEGIN
 END ??
 DELIMITER ;
 call mostrar_estudiantes_singrupo();
--- *****************************************************************************************************drop PROCEDURE actualizarPaper;
+-- *****************************************************************************************************
+-- ACTUALIZAR TITULO Y TEMA DE PAPER
 DELIMITER $$
 CREATE PROCEDURE actualizarPaper(IN pap VARCHAR(100),IN titulo VARCHAR(45),IN tema VARCHAR(45))
 BEGIN
@@ -699,11 +691,73 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
-call actualizarPaper('fuvolsito ','','');
-select * from paper;
 -- *****************************************************************************************************
+-- ESTUDIANTES QUE ESTAN EN UN GRUPO EN ESPECIFICO
 DELIMITER ??
+CREATE PROCEDURE lista_est_grupo(IN id INT)
+BEGIN
+	DECLARE nombre_grupoinvest VARCHAR (75);
+    SELECT gru_nombre INTO nombre_grupoinvest FROM perfil_grupo WHERE gru_id=id;
+    SELECT concat(est_nombre,' ',est_apellido),est_correo,prg_nombre FROM perfil WHERE gru_nombre LIKE nombre_grupoinvest; 
+END??
 DELIMITER ;
-SELECT pap_id FROM paper WHERE pap_titulo LIKE 'Sociedad y nosotros';
+-- *****************************************************************************************************
+-- ELIMINAR UN PAPER
+DELIMITER $$
+CREATE PROCEDURE eliminarPaperPorNombre(IN pap_nombre VARCHAR(45))
+BEGIN
+    DELETE FROM paper WHERE pap_titulo = pap_nombre;
+END $$
+DELIMITER ;
+-- ***************************************************************************************************** 
+-- PROFESORES QUE NO TIENEN GRUPO
+DELIMITER $$
+CREATE PROCEDURE ObtenerProfesoresSinGrupo()
+BEGIN
+    SELECT concat(pro_nombre,' ',pro_apellido),pro_correo,dep_nombre FROM perfil_profesor WHERE pro_gru_id IS NULL;
+END $$
+DELIMITER ;
+-- ***************************************************************************************************** 
+-- PROFESORES EN UN GRUPO EN ESPECÍFICO
+DELIMITER $$
+CREATE PROCEDURE ObtenerProfesoresPorGrupo(IN grupo_id INT)
+BEGIN
+		 SELECT concat(pro_nombre,' ',pro_apellido),pro_correo,dep_nombre FROM perfil_profesor WHERE pro_gru_id = grupo_id 
+        AND pro_cedula!=(select gru_lider from grupo_investigacion where gru_id=grupo_id );	
+
+END $$
+DELIMITER ;
+-- ***************************************************************************************************** 
+-- AÑADIR UN PROFESOR A UN GRUPO
+DELIMITER ??
+CREATE PROCEDURE add_profesor(IN gru INT,IN prof VARCHAR(70))
+BEGIN
+	UPDATE profesor SET pro_gru_id=gru WHERE pro_correo LIKE prof;
+END ??
+DELIMITER ;
+-- ***************************************************************************************************** 
+-- QUITAR UN PROFESOR DE UN GRUPO
+DELIMITER ??
+CREATE PROCEDURE remove_profesor(IN prof VARCHAR(70))
+BEGIN
+	UPDATE profesor SET pro_gru_id=null WHERE pro_correo LIKE prof;
+END ??
+DELIMITER ;
+-- ***************************************************************************************************** 
+-- AÑADE ESTUDIANTE A UN GRUPO DE INVESTIGACIÓN
+DELIMITER $$
+CREATE PROCEDURE ActualizarGrupoEstudiante(IN id INT, IN cor VARCHAR(70))
+BEGIN
+    UPDATE estudiante SET est_gru_id = id WHERE est_correo LIKE cor;
+END $$
+DELIMITER ;
+-- *****************************************************************************************************
+-- QUITA ESTUDIANTE DE UN GRUPO DE INVESTIGACIÓN
+DELIMITER $$
+CREATE PROCEDURE remove_estudiante(IN correo VARCHAR(45))
+BEGIN
+    UPDATE estudiante SET est_gru_id = NULL WHERE est_correo like correo;
+END $$
+DELIMITER ;
 -- *****************************************************************************************************
 -- FIN DEL SCRIPT

@@ -93,7 +93,7 @@ CREATE TABLE paper(
     pap_numPaginas INT NOT NULL,
     pap_tema VARCHAR(45),
     pap_pry_id INT NOT NULL,
-    FOREIGN KEY(pap_pry_id) REFERENCES proyecto(pry_id)
+    FOREIGN KEY(pap_pry_id) REFERENCES proyecto(pry_id) ON DELETE CASCADE
     );
 	
 -- *************************************************************************************************************************************************************
@@ -113,8 +113,8 @@ CREATE TABLE publicacion(
 	pub_edi_id INT NOT NULL,
     pub_pap_id INT NOT NULL,
 	pub_fechaPublicacion DATE NOT NULL,
-    FOREIGN KEY(pub_edi_id) REFERENCES editorial(edi_id),
-    FOREIGN KEY(pub_pap_id) REFERENCES paper(pap_id)
+    FOREIGN KEY(pub_edi_id) REFERENCES editorial(edi_id) ON DELETE CASCADE,
+    FOREIGN KEY(pub_pap_id) REFERENCES paper(pap_id) ON DELETE CASCADE
     );
     
 -- *************************************************************************************************************************************************************
@@ -221,8 +221,8 @@ CREATE TABLE equipos_laboratorio(
 CREATE TABLE laboratorio_proyecto(
 	lap_lab_id INT NOT NULL,
     lap_pry_id INT NOT NULL,
-    FOREIGN KEY (lap_lab_id) REFERENCES laboratorio(lab_id),
-    FOREIGN KEY (lap_pry_id) REFERENCES proyecto(pry_id)
+    FOREIGN KEY (lap_lab_id) REFERENCES laboratorio(lab_id) ON DELETE CASCADE,
+    FOREIGN KEY (lap_pry_id) REFERENCES proyecto(pry_id) ON DELETE CASCADE
 	);
 
 -- *************************************************************************************************************************************************************
@@ -241,8 +241,8 @@ CREATE TABLE existencia(
     exi_pub_edi_id INT NOT NULL,
     exi_pub_pap_id INT NOT NULL,
     FOREIGN KEY(exi_bib_id) REFERENCES biblioteca(bib_id),
-    FOREIGN KEY(exi_pub_edi_id) REFERENCES publicacion(pub_edi_id),
-    FOREIGN KEY(exi_pub_pap_id) REFERENCES publicacion(pub_pap_id)
+    FOREIGN KEY(exi_pub_edi_id) REFERENCES publicacion(pub_edi_id) ON DELETE CASCADE, 
+    FOREIGN KEY(exi_pub_pap_id) REFERENCES publicacion(pub_pap_id) ON DELETE CASCADE
 
 	);
 	

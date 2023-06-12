@@ -100,8 +100,8 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 		(6,'Sistemas simbioticos','Biologia/Ecología',6,aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
 -- PONER GRUPOS Y SEMILLEROS A LOS PROFESORES
- UPDATE profesor SET pro_gru_id=1;
-  UPDATE profesor SET pro_sem_id=2;
+-- UPDATE profesor SET pro_gru_id=1;
+UPDATE profesor SET pro_sem_id=2;
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA ESTUDIANTE
     INSERT INTO estudiante(est_cedula, est_nombre,est_apellido, est_edad, est_correo, est_telefono,est_direccion,est_tipoEstudiante,est_gru_id, est_prg_id,est_sem_id,est_contrasena)
@@ -120,7 +120,7 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
     INSERT INTO proyecto(pry_id,pry_nombre,pry_propuesta,pry_estado,pry_fechaInicio,pry_gru_id)
     VALUES (1,'Crypto mineria','Mineria de bitcoins','Aceptado','2021-01-03',1),
     (2,'Biodiversidad','Biologia/Ecología','Aceptado','2021-01-03',6),
-		(3,'Crypto mineria','Mineria de bitcoins','Negado','2021-01-03',1),
+		(3,'Crypto investigacion','Investigación de bitcoins','Negado','2021-01-03',1),
 		(4,'Hacking','Computacion Cientifica','Aceptado','2021-01-03',2),
 		(5,'Minory Report','Criminalistica/Medicina Forense','Aceptado','2021-01-03',4),
 		(6,'Cobre','Ciencia de materiles avanzados','Negado','2021-01-03',5),
