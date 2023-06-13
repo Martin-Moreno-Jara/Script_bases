@@ -191,7 +191,7 @@ DELIMITER ;
 -- *****************************************************************************************************
 -- MUESTRA LOS DATOS DEL PERFIL DEL ESTUDIANTE
 DELIMITER ??
-CREATE PROCEDURE mostrar_perfiles ()
+CREATE PROCEDURE mostrar_perfiles()
 BEGIN
 	SELECT * FROM perfil;
 END ??
@@ -207,7 +207,7 @@ DELIMITER ;
 -- *****************************************************************************************************
 -- MUESTRA LA INFORMACIÓN PARA LOS PROFESORES
  DELIMITER ??
-CREATE PROCEDURE mostrar_perfiles_profesores ()
+CREATE PROCEDURE mostrar_perfiles_profesores()
 BEGIN
 	SELECT * FROM perfil_profesor;
 END ??
@@ -673,7 +673,6 @@ BEGIN
 	SELECT concat(est_nombre,' ',est_apellido),est_correo,prg_nombre FROM perfil WHERE gru_nombre is NULL;
 END ??
 DELIMITER ;
-call mostrar_estudiantes_singrupo();
 -- *****************************************************************************************************
 -- ACTUALIZAR TITULO Y TEMA DE PAPER
 DELIMITER $$
@@ -727,20 +726,36 @@ BEGIN
 
 END $$
 DELIMITER ;
--- ***************************************************************************************************** 
+-- ***************************************************************************************************** drop procedure add_profesor;
 -- AÑADIR UN PROFESOR A UN GRUPO
 DELIMITER ??
 CREATE PROCEDURE add_profesor(IN gru INT,IN prof VARCHAR(70))
 BEGIN
 	UPDATE profesor SET pro_gru_id=gru WHERE pro_correo LIKE prof;
+    call sumProfesorGrupo(gru);
 END ??
 DELIMITER ;
 -- ***************************************************************************************************** 
+DELIMITER ??
+CREATE PROCEDURE sumProfesorGrupo(IN grupo INT)
+BEGIN
+	UPDATE grupo_investigacion SET gru_numIntegrantes=gru_numIntegrantes+1 WHERE gru_id=grupo;
+END ??
+DELIMITER ;
+-- ****************************************************************************************************drop procedure remove_profesor;
 -- QUITAR UN PROFESOR DE UN GRUPO
 DELIMITER ??
-CREATE PROCEDURE remove_profesor(IN prof VARCHAR(70))
+CREATE PROCEDURE remove_profesor(In grupo int,IN prof VARCHAR(70))
 BEGIN
 	UPDATE profesor SET pro_gru_id=null WHERE pro_correo LIKE prof;
+    call lessProGrupo(grupo);
+END ??
+DELIMITER ;
+-- ***************************************************************************************************** 
+DELIMITER ??
+CREATE PROCEDURE lessProGrupo(IN grupo INT)
+BEGIN 
+	UPDATE grupo_investigacion SET gru_numIntegrantes=gru_numIntegrantes-1 WHERE gru_id=grupo;
 END ??
 DELIMITER ;
 -- ***************************************************************************************************** 

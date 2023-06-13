@@ -17,7 +17,6 @@ FROM grupo_investigacion join profesor ON (grupo_investigacion.gru_lider=profeso
 CREATE VIEW vw_proyecto_grupo AS
  SELECT gru_id,gru_nombre,gru_numIntegrantes,gru_numPapers,pry_id,pry_gru_id,pry_nombre, pry_estado,gru_numProyectos 
  FROM proyecto JOIN grupo_investigacion ON (grupo_investigacion.gru_id= proyecto.pry_gru_id);
- select * from vw_proyecto_grupo;
  -- *****************************************************************************************************
  -- VISTA CON JOIN DE PAPER, PROYECTO Y GRUPO DE INVESTIGACIÓN.
  CREATE VIEW ver_publicaciones AS 
@@ -98,12 +97,6 @@ from estudiante join programa_academico on (prg_id=est_prg_id);
  gru_numPapers,gru_area, gru_numProyectos, 
  CONCAT(pro_nombre,' ',pro_apellido) as Profesor_lider
  FROM grupo_investigacion JOIN profesor  ON (grupo_investigacion.gru_lider=profesor.pro_cedula);
- select * from perfil_grupo;
- update grupo_investigacion set gru_numPapers=gru_numPapers-1 WHERE gru_id=1;
--- *****************************************************************************************************
-  CREATE VIEW vw_paper_editorial_bib AS SELECT pap_titulo,edi_nombre,bib_nombre FROM publicacion 
-  JOIN paper on (pap_id=pub_pap_id) JOIN editorial on (pub_edi_id=edi_id)
-  JOIN existencia on (exi_pub_pap_id=pap_id) JOIN biblioteca ON (bib_id=exi_bib_id); 
 -- *****************************************************************************************************
 CREATE VIEW vw_depNombres AS
 select dep_nombre from departamento;
