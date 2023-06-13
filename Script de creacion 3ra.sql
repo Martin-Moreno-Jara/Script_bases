@@ -1,3 +1,7 @@
+-- ####################################################################################################
+-- SCRIPT DE CREACIÓN DE LA BASE DE DATOS
+-- ####################################################################################################
+
 -- DROP SCHEMA investigacion;
 CREATE SCHEMA investigacion;
 USE Investigacion;
@@ -63,7 +67,7 @@ CREATE TABLE semillero(
 CREATE TABLE grupo_investigacion(
 	gru_id INT NOT NULL PRIMARY KEY,
 	gru_nombre VARCHAR(45) NOT NULL,
-    gru_numIntegrantes INT DEFAULT 0,
+    gru_numIntegrantes INT DEFAULT 1,
     gru_numPapers INT DEFAULT 0,
     gru_area VARCHAR(45) NOT NULL,
     gru_numProyectos INT DEFAULT 0,
@@ -78,8 +82,8 @@ CREATE TABLE proyecto(
     pry_nombre VARCHAR(45) NOT NULL,
     pry_propuesta VARCHAR(45) NOT NULL,
     pry_estado VARCHAR(45) NOT NULL,
-    pry_fechaInicio DATE NOT NULL,
-    pry_fechaFin DATE,
+    pry_fechaInicio DATE DEFAULT NULL ,
+    pry_fechaFin DATE DEFAULT NULL,
     pry_gru_id INT NOT NULL,
     FOREIGN KEY(pry_gru_id) REFERENCES grupo_investigacion(gru_id)
 	);
@@ -93,7 +97,7 @@ CREATE TABLE paper(
     pap_numPaginas INT NOT NULL,
     pap_tema VARCHAR(45),
     pap_pry_id INT NOT NULL,
-    FOREIGN KEY(pap_pry_id) REFERENCES proyecto(pry_id)
+    FOREIGN KEY(pap_pry_id) REFERENCES proyecto(pry_id) ON DELETE CASCADE
     );
 	
 -- *************************************************************************************************************************************************************
@@ -113,8 +117,8 @@ CREATE TABLE publicacion(
 	pub_edi_id INT NOT NULL,
     pub_pap_id INT NOT NULL,
 	pub_fechaPublicacion DATE NOT NULL,
-    FOREIGN KEY(pub_edi_id) REFERENCES editorial(edi_id),
-    FOREIGN KEY(pub_pap_id) REFERENCES paper(pap_id)
+    FOREIGN KEY(pub_edi_id) REFERENCES editorial(edi_id) ON DELETE CASCADE,
+    FOREIGN KEY(pub_pap_id) REFERENCES paper(pap_id) ON DELETE CASCADE
     );
     
 -- *************************************************************************************************************************************************************
@@ -155,8 +159,6 @@ CREATE TABLE profesor(
     pro_telefono VARCHAR(45),
     pro_direccion VARCHAR(45),
 	pro_tipoProfesor VARCHAR(45) NOT NULL,
-    pro_tituloPregrado VARCHAR(45) NOT NULL,
-    pro_tituloPosgrado VARCHAR(45),
     pro_gru_id INT DEFAULT NULL,
     pro_sem_id INT DEFAULT NULL,
     pro_contrasena BLOB DEFAULT NULL,
@@ -223,8 +225,8 @@ CREATE TABLE equipos_laboratorio(
 CREATE TABLE laboratorio_proyecto(
 	lap_lab_id INT NOT NULL,
     lap_pry_id INT NOT NULL,
-    FOREIGN KEY (lap_lab_id) REFERENCES laboratorio(lab_id),
-    FOREIGN KEY (lap_pry_id) REFERENCES proyecto(pry_id)
+    FOREIGN KEY (lap_lab_id) REFERENCES laboratorio(lab_id) ON DELETE CASCADE,
+    FOREIGN KEY (lap_pry_id) REFERENCES proyecto(pry_id) ON DELETE CASCADE
 	);
 
 -- *************************************************************************************************************************************************************
@@ -243,8 +245,8 @@ CREATE TABLE existencia(
     exi_pub_edi_id INT NOT NULL,
     exi_pub_pap_id INT NOT NULL,
     FOREIGN KEY(exi_bib_id) REFERENCES biblioteca(bib_id),
-    FOREIGN KEY(exi_pub_edi_id) REFERENCES publicacion(pub_edi_id),
-    FOREIGN KEY(exi_pub_pap_id) REFERENCES publicacion(pub_pap_id)
+    FOREIGN KEY(exi_pub_edi_id) REFERENCES publicacion(pub_edi_id) ON DELETE CASCADE, 
+    FOREIGN KEY(exi_pub_pap_id) REFERENCES publicacion(pub_pap_id) ON DELETE CASCADE
 
 	);
 	

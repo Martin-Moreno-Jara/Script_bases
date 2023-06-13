@@ -1,3 +1,7 @@
+-- ####################################################################################################
+-- SCRIPT DE CREACIÓN DE INSERCIÓN DE DATOS
+-- ####################################################################################################
+
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA SEDE
 INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
@@ -16,7 +20,7 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 -- INSERCIÓN DE DATOS EN LA TABLA DEPARTAMENTO
  INSERT INTO departamento(dep_id,dep_nombre,dep_fac_id)
     VALUES 	(1,'Civil y agrícola',1),(2,'Sistema e industrial',1),(3,'Eléctrica y Electrónica',1),
-            (4,'Mecánica y mecatrónica',1),(5,'Quimica y ambiental',1),(6,'Civil y agrícola',1),
+            (4,'Mecánica y mecatrónica',1),(5,'Quimica y ambiental',1),(6,'Agronómica',1),
             (7,'Derecho',2),(8,'Ciencia política',2),(9,'Antropología',3),
             (10,'Psicología',3),(11,'Filosofía',3),(12,'Salud pública',4),
             (13,'Escuela de educación médica',4),(14,'Arquitectura',6),(15,'Música',6),
@@ -56,17 +60,17 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA PROFESOR
-	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_tipoProfesor, pro_tituloPregrado,pro_tituloPosgrado,pro_contrasena)
-    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',aes_encrypt('123','clave')),
-			(2,'Juan','Armando',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',aes_encrypt('123','clave')),
-	(3,'Felipe','Fonseca',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingeniería Quimica','Maestria en ingeniería Quimica',aes_encrypt('123','clave')),
-	(4,'Gabriel','Guerrero',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ciencias humanas','Maestria en ciencias humanas',aes_encrypt('123','clave')),
-	(5,'Luis','Suarez',28,'luis@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería Sistemas','Maestria en ingeniería sistemas',aes_encrypt('123','clave')),
-	(6,'Gustavo','Gattuso',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',aes_encrypt('123','clave')),
-	(7,'Martin','Moreno',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','Planta','Ingeniería industrial','Maestria en ingeniería industrial',aes_encrypt('123','clave')),
-	(8,'Enrique','Peña',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','Catedra','Ingenieria Mecanica','Maestria en ingeniería mecanica',aes_encrypt('123','clave')),
-	(9,'Sandra','Sierra',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina','Maestria en Medicina',aes_encrypt('123','clave')),
-	(10,'Mariana','Mendez',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','Planta','Medicina Veterinaria','Maestria en Medicina Veterinaria',aes_encrypt('123','clave'));
+	INSERT INTO profesor(pro_cedula,pro_nombre,pro_apellido,pro_edad,pro_correo,pro_telefono,pro_direccion,pro_tipoProfesor,pro_dep_id,pro_contrasena)
+    VALUES	(1,'Alberto','Martinez',58,'albmar@unal.edu.co','12312445','Cra 93b # 56a','Planta',1,aes_encrypt('123','clave')),
+			(2,'Juan','Armando',25,'juanj@unal.edu.co','12312445','Cra 21b # 56a','Planta',1,aes_encrypt('123','clave')),
+	(3,'Felipe','Fonseca',30,'felipeg@unal.edu.co','12312445','Cra 93b # 56a','Catedra',2,aes_encrypt('123','clave')),
+	(4,'Gabriel','Guerrero',55,'gabrielg@unal.edu.co','12312445','Cra 93b # 56a','Planta',9,aes_encrypt('123','clave')),
+	(5,'Luis','Suarez',28,'luis@unal.edu.co','12312445','Cra 93b # 56a','Planta',8,aes_encrypt('123','clave')),
+	(6,'Gustavo','Gattuso',58,'gustavog@unal.edu.co','12312445','Cra 93b # 56a','Planta',4,aes_encrypt('123','clave')),
+	(7,'Martin','Moreno',58,'martinm@unal.edu.co','12312445','Cra 93b # 56a','Planta',4,aes_encrypt('123','clave')),
+	(8,'Enrique','Peña',58,'enriquee@unal.edu.co','12312445','Cra 93b # 56a','Catedra',5,aes_encrypt('123','clave')),
+	(9,'Sandra','Sierra',58,'sandras@unal.edu.co','12312445','Cra 93b # 56a','Planta',14,aes_encrypt('123','clave')),
+	(10,'Mariana','Mendez',58,'marianam@unal.edu.co','12312445','Cra 93b # 56a','Planta',10,aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA EMPLEADO
 	INSERT INTO empleado (emp_cedula,emp_nombre,emp_apellido,emp_edad,emp_correo,emp_telefono,emp_direccion,emp_tipoEmpleado,emp_cargo,emp_contrasena)
@@ -99,6 +103,9 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
 		(5,'Materials','Ciencia de materiles avanzados',7,aes_encrypt('123','clave')),
 		(6,'Sistemas simbioticos','Biologia/Ecología',6,aes_encrypt('123','clave'));
 -- *************************************************************************************************************************************************************
+-- PONER GRUPOS Y SEMILLEROS A LOS PROFESORES
+UPDATE profesor SET pro_sem_id=2;
+-- *************************************************************************************************************************************************************
 -- INSERCIÓN DE DATOS EN LA TABLA ESTUDIANTE
     INSERT INTO estudiante(est_cedula, est_nombre,est_apellido, est_edad, est_correo, est_telefono,est_direccion,est_tipoEstudiante,est_gru_id, est_prg_id,est_sem_id,est_contrasena)
     VALUES(1,'Jose','Gonzales',18,'josego@unal.edu.co','310311222','Cra 45a #56','Pregrado',1,1,1,aes_encrypt('123','clave'))
@@ -116,7 +123,7 @@ INSERT INTO sede(sed_id,sed_nombre,sed_ubicacion)
     INSERT INTO proyecto(pry_id,pry_nombre,pry_propuesta,pry_estado,pry_fechaInicio,pry_gru_id)
     VALUES (1,'Crypto mineria','Mineria de bitcoins','Aceptado','2021-01-03',1),
     (2,'Biodiversidad','Biologia/Ecología','Aceptado','2021-01-03',6),
-		(3,'Crypto mineria','Mineria de bitcoins','Negado','2021-01-03',1),
+		(3,'Crypto investigacion','Investigación de bitcoins','Negado','2021-01-03',1),
 		(4,'Hacking','Computacion Cientifica','Aceptado','2021-01-03',2),
 		(5,'Minory Report','Criminalistica/Medicina Forense','Aceptado','2021-01-03',4),
 		(6,'Cobre','Ciencia de materiles avanzados','Negado','2021-01-03',5),
